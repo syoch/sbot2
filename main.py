@@ -86,7 +86,7 @@ def startHttpServer():
     def HttpServer():
         h=handler()
         http.server.HTTPServer(("localhost",os.environ["port"] if "port" in os.environ else 3000),h)
-    threading.Thread(target=HttpServer)
+    threading.Thread(target=HttpServer).join()
 
 
 
