@@ -84,8 +84,15 @@ def startHttpServer():
             self.end_headers()
             self.wfile.write(encoded)
     def HttpServer():
-        http.server.HTTPServer(("localhost",os.environ["port"] if "port" in os.environ else 3000),handler)
+        http.server.HTTPServer(
+            (
+                "localhost",
+                os.environ["port"] if "port" in os.environ else 3000
+            ),
+            handler
+        ).serve_forever()
     threading.Thread(target=HttpServer).start()
+    
 
 
 
@@ -234,5 +241,7 @@ async def calc(sender,formula):
 #Main process
 #--------------------
 if __name__ == "__main__":
+    logging.info("Starting Http server")
     startHttpServer()
+    logging.info("Discord starting")
     client.run("NjQ5OTQ5MzY2Nzg1ODAyMjYw.XgWeyQ.mG3XI3l5ryHuc4NoUQaa0hw7GX4")
