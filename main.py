@@ -212,7 +212,5 @@ async def calc(sender,formula):
 #Main process
 #--------------------
 if __name__ == "__main__":
-    logging.info("Starting Http server")
-    startHttpServer()
     logging.info("Discord starting")
     client.run("NjQ5OTQ5MzY2Nzg1ODAyMjYw.XgWeyQ.mG3XI3l5ryHuc4NoUQaa0hw7GX4")
