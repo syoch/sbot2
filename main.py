@@ -63,38 +63,6 @@ def f2l(formula_,symbols_=["x"]):
         "lambda "+",".join(symbols)+" : "+formula,
         numpy.__dict__,math.__dict__
     ))
-
-#Http server start
-def startHttpServer():
-    class handler(http.server.BaseHTTPRequestHandler):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
-        def do_GET(self):
-            encoded = 'Sbot2'.encode("utf-8",'surrogateescape')
-            self.send_response(http.HTTPStatus.OK)
-            self.send_header("Content-type", "text/plain")
-            self.send_header("Content-Length", str(len(encoded)))
-            self.end_headers()
-            self.wfile.write(encoded)     
-        def do_POST(self):
-            encoded = 'Sbot2'.encode("utf-8", 'surrogateescape')
-            self.send_response(http.HTTPStatus.OK)
-            self.send_header("Content-type", "text/plain")
-            self.send_header("Content-Length", str(len(encoded)))
-            self.end_headers()
-            self.wfile.write(encoded)
-    def HttpServer():
-        logging.info("listing on"+str(os.environ["port"] if "port" in os.environ else 3000))
-        http.server.HTTPServer(
-            (
-                "localhost",
-                os.environ["port"] if "port" in os.environ else 3000
-            ),
-            handler
-        ).serve_forever()
-    thr=threading.Thread(target=HttpServer)
-    #thr.start()
-    thr.run()
     
 
 
