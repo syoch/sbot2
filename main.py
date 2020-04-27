@@ -84,9 +84,8 @@ def startHttpServer():
             self.end_headers()
             self.wfile.write(encoded)
     def HttpServer():
-        h=handler()
-        http.server.HTTPServer(("localhost",os.environ["port"] if "port" in os.environ else 3000),h)
-    threading.Thread(target=HttpServer).join()
+        http.server.HTTPServer(("localhost",os.environ["port"] if "port" in os.environ else 3000),handler)
+    threading.Thread(target=HttpServer).start()
 
 
 
