@@ -1,7 +1,6 @@
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-
 logging.info("import Re")
 import re
 logging.info("import discord")
@@ -16,7 +15,19 @@ logging.info("import subprocess")
 import subprocess
 logging.info("import math")
 import math
+logging.info("import Thread")
+import threading
+logging.info("import http")
+import http
+logging.info("import os,sys")
+import os,sys
 
+
+
+
+#--------------------
+#Program utilities
+#--------------------
 def f2l(formula_,symbols_=["x"]):
     """
     formula_ type is str
@@ -24,7 +35,7 @@ def f2l(formula_,symbols_=["x"]):
 
     formula_ Example:3x x x/2 x^2
     symbols_ Example:["x","y"]
-    lambda arguments is symbols(?)
+    lambda arguments have this func second argument 'symbols_'
     """
     symbols=list(symbols_)
     formula=str(formula_)
@@ -48,30 +59,56 @@ def f2l(formula_,symbols_=["x"]):
             
             if formula==oldf:
                 break
-    #formula="1*"+formula
     return (formula,eval(
         "lambda "+",".join(symbols)+" : "+formula,
         numpy.__dict__,math.__dict__
     ))
 
+#Http server start
+def startHttpServer():
+    class handler(http.server.BaseHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+        def do_GET(self):
+            encoded = 'Sbot2'.encode("utf-8",'surrogateescape')
+            self.send_response(http.HTTPStatus.OK)
+            self.send_header("Content-type", "text/plain")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.end_headers()
+            self.wfile.write(encoded)     
+        def do_POST(self):
+            encoded = 'Sbot2'.encode("utf-8", 'surrogateescape')
+            self.send_response(http.HTTPStatus.OK)
+            self.send_header("Content-type", "text/plain")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.end_headers()
+            self.wfile.write(encoded)
+    def HttpServer():
+        h=handler()
+        http.server.HTTPServer(("localhost",os.environ["port"] if "port" in os.environ else 3000),h)
+    threading.Thread(target=HttpServer)
+
+
+
 
 client=discord.Client()
 
+
+#--------------------
+#Discord Event Handler
+#--------------------
 @client.event
 async def on_ready():
     logging.info("Login on "+client.user.name)
 
 @client.event
 async def on_message(msg):
-    #logging.info("[%s][%s][%s]%s"%(msg.guild.name,msg.channel.name,msg.author.name,msg.content))
     if(msg.author==client.user):
         return
-    
     content=msg.content.lower()
     if(content[0:2]!="sb"):
         return
     prefix=content.split("@")[0][2:]
-    
     command=content.split("@")[1].split(" ")[0]
     arguments=content.split("@")[1].split(" ")[1:]
     
@@ -79,6 +116,8 @@ async def on_message(msg):
         await    util(msg.channel.send,command,arguments)
     elif(prefix=="g"):
         await general(msg.channel.send,command,arguments)
+
+
 
 #--------------------
 #Category switcher
@@ -94,9 +133,12 @@ async def util(sender,cmd,arg):
     if(cmd=="graph"):await graph(sender,"".join(arg))
     if(cmd=="eval"):await _eval(sender,arg)
 
+
+
 #--------------------
 #Commands
 #--------------------
+
 #Help
 async def help(sender,arg):
     await sender(
@@ -193,4 +235,5 @@ async def calc(sender,formula):
 #Main process
 #--------------------
 if __name__ == "__main__":
+    startHttpServer()
     client.run("NjQ5OTQ5MzY2Nzg1ODAyMjYw.XgWeyQ.mG3XI3l5ryHuc4NoUQaa0hw7GX4")
