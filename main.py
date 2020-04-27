@@ -91,7 +91,9 @@ def startHttpServer():
             ),
             handler
         ).serve_forever()
-    threading.Thread(target=HttpServer).start()
+    thr=threading.Thread(target=HttpServer)
+    #thr.start()
+    thr.run()
     
 
 
