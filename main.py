@@ -84,6 +84,7 @@ def startHttpServer():
             self.end_headers()
             self.wfile.write(encoded)
     def HttpServer():
+        logging.info("listing on"+str(os.environ["port"] if "port" in os.environ else 3000))
         http.server.HTTPServer(
             (
                 "localhost",
