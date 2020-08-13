@@ -41,6 +41,7 @@ def f2l(formula_,symbols_=["x"]):
     formula=str(formula_)
     formula=re.sub(r"\|\-?(.*)\|",f"abs(\1)",formula)
     formula=formula.replace("^","**")
+    formula=re.sub(r"log\(([^\)]*)\)",r"log(\1)",formula)
     formula=re.sub(r"log\[([^\]]*)\]\(([^\)]*)\)",r"log(\2)/log(\1)",formula)
     formula=formula.replace("asin" ,"arcsin" )
     formula=formula.replace("acos" ,"arccos" )
@@ -48,7 +49,9 @@ def f2l(formula_,symbols_=["x"]):
     formula=formula.replace("asinh","arcsinh")
     formula=formula.replace("acosh","arccosh")
     formula=formula.replace("atanh","arctanh")
+    
     for s in symbols:
+        formula=re.sub(rf"{s}\*\*(\d+)",rf"({s}**\1)",formula)
         while True:
             oldf=formula
             formula=re.sub(rf"(\d){s}",rf"(\1*{s})",formula)
@@ -59,6 +62,7 @@ def f2l(formula_,symbols_=["x"]):
             
             if formula==oldf:
                 break
+    formula=re.sub(rf"(\d)\(",rf"\1*(",formula)
     return (formula,eval(
         "lambda "+",".join(symbols)+" : "+formula,
         numpy.__dict__,math.__dict__
@@ -88,11 +92,16 @@ async def on_message(msg):
     prefix=content.split("@")[0][2:]
     command=content.split("@")[1].split(" ")[0]
     arguments=content.split("@")[1].split(" ")[1:]
+    try:
+        if(prefix=='u'):
+            await    util(msg.channel.send,command,arguments)
+        elif(prefix=="g"):
+            await general(msg.channel.send,command,arguments)
+    except Exception as ex:
+        await msg.channel.send("Errrrrrror Durrrrring Command execute")
+        await msg.channel.send(str(ex.args))
+        raise ex
     
-    if(prefix=='u'):
-        await    util(msg.channel.send,command,arguments)
-    elif(prefix=="g"):
-        await general(msg.channel.send,command,arguments)
 
 
 
@@ -107,7 +116,7 @@ async def general(sender,cmd,arg):
 #Utility Category
 async def util(sender,cmd,arg):
     if(cmd=="calc"):await calc(sender,"".join(arg))
-    if(cmd=="graph"):await graph(sender,"".join(arg))
+    if(cmd=="graph"):await graph(sender,arg)
     if(cmd=="eval"):await _eval(sender,arg)
 
 
@@ -186,8 +195,20 @@ async def _eval(sender,arg):
         await sender("Error:"+ex.text)
 
 #Graphing Command
-async def graph(sender,formula):
-    x=numpy.arange(-100,100)
+async def graph(sender,args):
+    s=-10
+    e=10
+    _formula=[]
+    flag="n" # s:check start e:check end n:none
+    for arg in args:
+        if flag=="s":s=int(arg);flag="n"
+        elif flag=="e":e=int(arg);flag="n"
+        elif arg=="--start":flag="s"
+        elif arg=="--end":flag="e"
+        else:
+            _formula.append(arg)
+    formula="".join(_formula)
+    x=numpy.arange(s-0.5,e+0.5)
     ff=f2l(formula)
     f=ff[1]
     plt.figure()
