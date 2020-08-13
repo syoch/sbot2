@@ -5,7 +5,7 @@ logging.info("import Re")
 import re
 logging.info("import discord")
 import discord
-logging.info("import Pyplot")
+logging.info("import mpl.Pyplot")
 import matplotlib.pyplot as plt
 logging.info("import numpy")
 import numpy
