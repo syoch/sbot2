@@ -86,7 +86,8 @@ async def on_ready():
 async def on_message(msg):
     if(msg.author==client.user):
         return
-    content=msg.content.lower()
+    a=(msg.content+" ").index(" ")
+    content=msg.content[:a].lower()+msg.content[a:]
     if(content[0:2]!="sb"):
         return
     prefix=content.split("@")[0][2:]
