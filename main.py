@@ -208,7 +208,7 @@ async def graph(sender,args):
         else:
             _formula.append(arg)
     formula="".join(_formula)
-    x=numpy.arange(s-0.5,e+0.5)
+    x=numpy.linspace(s-0.5,e+0.5,1000*(e-s+1))
     ff=f2l(formula)
     f=ff[1]
     plt.figure()
