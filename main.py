@@ -90,6 +90,8 @@ async def on_message(msg):
     content=msg.content[:a].lower()+msg.content[a:]
     if(content[0:2]!="sb"):
         return
+    if(content[3]!="@"):
+        return
     prefix=content.split("@")[0][2:]
     command=content.split("@")[1].split(" ")[0]
     arguments=content.split("@")[1].split(" ")[1:]
