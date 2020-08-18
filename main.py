@@ -40,17 +40,16 @@ def f2l(formula_,symbols_=["x"]):
     """
     symbols=list(symbols_)
     formula=str(formula_)
-    formula=re.sub(r"\|\-?(.*)\|",f"abs(\1)",formula)
+    formula=re.sub(r"\|\-?(.*)\|",r"abs(\1)",formula)
     formula=formula.replace("^","**")
     formula=re.sub(r"log\(([^\)]*)\)",r"log(\1)",formula)
     formula=re.sub(r"log\[([^\]]*)\]\(([^\)]*)\)",r"log(\2)/log(\1)",formula)
     formula=formula.replace("asin" ,"arcsin" )
     formula=formula.replace("acos" ,"arccos" )
     formula=formula.replace("atan" ,"arctan" )
-    formula=formula.replace("asinh","arcsinh")
+    formula=formula.replace("asinh","arsinh")
     formula=formula.replace("acosh","arccosh")
     formula=formula.replace("atanh","arctanh")
-    
     for s in symbols:
         formula=re.sub(rf"{s}\*\*(\d+)",rf"({s}**\1)",formula)
         while True:
