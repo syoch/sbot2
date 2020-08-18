@@ -1,4 +1,5 @@
 import logging
+from math import ceil
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
 logging.info("import Re")
@@ -204,14 +205,14 @@ async def graph(sender,args):
     _formula=[]
     flag="n" # s:check start e:check end n:none
     for arg in args:
-        if flag=="s":s=int(arg);flag="n"
-        elif flag=="e":e=int(arg);flag="n"
+        if flag=="s":s=float(arg);flag="n"
+        elif flag=="e":e=float(arg);flag="n"
         elif arg=="--start":flag="s"
         elif arg=="--end":flag="e"
         else:
             _formula.append(arg)
     formula="".join(_formula)
-    x=numpy.linspace(s-0.5,e+0.5,1000*(e-s+1))
+    x=numpy.linspace(s,e,ceil(1000*(e-s)))
     ff=f2l(formula)
     f=ff[1]
     plt.figure()
