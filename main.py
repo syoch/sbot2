@@ -101,7 +101,7 @@ async def on_message(msg):
         elif(prefix=="g"):
             await general(msg.channel.send,command,arguments)
     except Exception as ex:
-        await msg.channel.send("Errrrrrror Durrrrring Command execute")
+        await msg.channel.send("Errrrrrror Whhiiiileee Command execute")
         await msg.channel.send(str(ex.args))
         raise ex
     
