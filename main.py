@@ -193,10 +193,6 @@ async def _eval(sender,arg):
         def myImport(name):
             if name == "subprocess":
                 raise Exception("module subprocess is blocked")
-            elif name == "importlib":
-                raise Exception("module importlib is blocked")
-            elif name == "imp":
-                raise Exception("module imp is blocked")
             else:
                 obj = __import__(name)
                 
@@ -222,14 +218,15 @@ async def _eval(sender,arg):
                 raise Exception("os.system in src")
             ret=eval(
                 src,
-                {},
+                {
+                    "__import__":myImport,
+                },
                 {
                     "__builtins__":{},
                     "buf":buf,
                     "input":inp,
                     "exit":block("exit()"),
                     "range":myRange,
-                    "__import__":myImport,
                     "exec":block("exec()"),
                     "open":myOpen,
                     "globals":block("globals"),
