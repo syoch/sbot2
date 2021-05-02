@@ -209,6 +209,7 @@ async def _eval(sender,arg):
                 obj.fchdir=block("os.fchdir()")
                 obj.getcwd=block("os.getcwd()")
                 obj.open=block("os.open()")
+                obj.fdopen=block("os.fdopen()")
             return obj
         def block(name:str=""):
             def wrap(*args):
