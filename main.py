@@ -194,7 +194,7 @@ async def _eval(sender,arg):
                 obj = __import__(name)
                 
             if name=="sys":
-                obj.exit = myExit
+                obj.exit = block("sys.exit()")
             elif name=="os":
                 obj.system = block("os.system()")
                 obj.fork = block("os.fork()")
