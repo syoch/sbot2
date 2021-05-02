@@ -23,7 +23,7 @@ import http
 logging.info("import os,sys")
 import os,sys
 
-
+TOKEN="NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.d1LrtoWxbhwimbnVDjfuxcsTmas"
 
 
 #--------------------
@@ -171,9 +171,47 @@ async def _eval(sender,arg):
     ret=None
     if laun=="py":
         buf=io.StringIO()
+        def myExit(ret=0):
+            nonlocal buf
+            print(f"exit({ret})",file=buf)
+        def myRange(a=0,b=0,c=1):
+            start=0
+            end=0
+            step=c
+            
+            if b==0: # argument count == 1
+                end=a
+            else:
+                start=a
+                end=b
+            if end > 10**10:
+            	end=100
+            return range(a,b,c)
+        def myImport(name):
+            if name == "subprocess":
+                obj = None
+            else:
+                obj = __import__(name)
+                
+            if name=="sys":
+                obj.exit=myExit
+            else name=="os":
+                obj.system=lambda x="":"system() is blocked"
+                
+            return obj
         inp=lambda x="":"Input"
         src=re.sub(r"print\(([^\)]*)\)",r"print(\1,file=buf)",src)
-        ret=eval(src,{},{"buf":buf,"input":inp})
+        ret=eval(
+            src,
+            {},
+            {
+                "__builtins__":{},
+                "buf":buf,
+                "input":inp,
+                "exit":myExit,
+                "range":myRange,""
+            }
+        )
         stdout=buf.getvalue()
     elif laun=="js":
         src=src.replace("\"","\\\"")
@@ -237,4 +275,4 @@ async def calc(sender,formula):
 #--------------------
 if __name__ == "__main__":
     logging.info("Discord starting")
-    client.run("NjQ5OTQ5MzY2Nzg1ODAyMjYw.XgWeyQ.mG3XI3l5ryHuc4NoUQaa0hw7GX4")
+    client.run(TOKEN)
