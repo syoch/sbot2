@@ -193,6 +193,10 @@ async def _eval(sender,arg):
         def myImport(name):
             if name == "subprocess":
                 raise Exception("module subprocess is blocked")
+            elif name == "importlib":
+                raise Exception("module importlib is blocked")
+            elif name == "imp":
+                raise Exception("module imp is blocked")
             else:
                 obj = __import__(name)
                 
@@ -201,10 +205,6 @@ async def _eval(sender,arg):
             elif name=="os":
                 obj.system = block("os.system()")
                 obj.fork = block("os.fork()")
-            elif name=="importlib":
-                obj.import_module = block("importlib.import_module()")
-                obj.__import__ = block("importlib.__import__()")
-                obj.abc.__import__ = block("importlib.__import__()")
             return obj
         def block(name:str=""):
             def wrap(*args):
