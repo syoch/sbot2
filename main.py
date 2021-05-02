@@ -95,14 +95,17 @@ async def on_message(msg):
     prefix=content.split("@")[0][2:]
     command=content.split("@")[1].split(" ")[0]
     arguments=content.split("@")[1].split(" ")[1:]
+    async def token_filter(content,**kwargs):
+        content=content.replace(TOKEN,"<TOKEN>")
+        return await msg.channel.send(content,**kwargs)
     try:
         if(prefix=='u'):
-            await    util(msg.channel.send,command,arguments)
+            await    util(token_filter,command,arguments)
         elif(prefix=="g"):
-            await general(msg.channel.send,command,arguments)
+            await general(token_filter,command,arguments)
     except Exception as ex:
         await msg.channel.send("Errrrrrror Whhiiiileee Command execute")
-        await msg.channel.send(str(ex.args))
+        await token_filter(str(ex.args))
         raise ex
     
 
@@ -198,6 +201,7 @@ async def _eval(sender,arg):
             elif name=="importlib":
                 obj.import_module = block("importlib.import_module()")
                 obj.__import__ = block("importlib.__import__()")
+                obj.abc.__import__ = block("importlib.__import__()")
             return obj
         def block(name:str=""):
             def wrap(*args):
