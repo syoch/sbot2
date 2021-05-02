@@ -208,6 +208,7 @@ async def _eval(sender,arg):
                 obj.chdir=block("os.chdir()")
                 obj.fchdir=block("os.fchdir()")
                 obj.getcwd=block("os.getcwd()")
+                obj.open=block("os.open()")
             return obj
         def block(name:str=""):
             def wrap(*args):
