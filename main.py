@@ -234,6 +234,7 @@ async def _eval(sender,arg):
             )
         except Exception as ex:
             error=str(ex)
+        VMglobal["__builtins__"].__import__=orgImport
         stdout=buf.getvalue()
     elif laun=="js":
         src=src.replace("\"","\\\"")
