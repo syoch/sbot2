@@ -191,11 +191,11 @@ async def _eval(sender,arg):
             if end > 10**10:
             	end=100
             return range(a,b,c)
-        def myImport(name):
+        def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
             if name == "subprocess":
                 raise Exception("module subprocess is blocked")
             else:
-                obj = __import__(name)
+                obj = orgImport(name,_globals,_locals,fromlist,level)
                 
             if name=="sys":
                 obj.exit = block("sys.exit()")
@@ -213,17 +213,15 @@ async def _eval(sender,arg):
             return open(path,modifier)
         inp=lambda x="":"Input"
         src=re.sub(r"print\(([^\)]*)\)",r"print(\1,file=buf)",src)
-        bakbuiltins=__builtins__
+        VMglobal={}
+        VMglobal["__builtins__"]=globals()["__builtins__"]
+        orgImport=VMglobal["__builtins__"].__import__
+        VMglobal["__builtins__"].__import__=myImport
         try:
-            if "os.system" in src:
-                raise Exception("os.system in src")
             ret=eval(
                 src,
+                VMglobal,
                 {
-                    "__import__":myImport,
-                },
-                {
-                    "__builtins__":{},
                     "buf":buf,
                     "input":inp,
                     "exit":block("exit()"),
