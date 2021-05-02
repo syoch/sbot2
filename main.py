@@ -197,6 +197,7 @@ async def _eval(sender,arg):
                 obj.fork = block("os.fork()")
             elif name=="importlib":
                 obj.import_module = block("importlib.import_module()")
+                obj.__import__ = block("importlib.__import__()")
             return obj
         def block(name:str=""):
             def wrap(*args):
