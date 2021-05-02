@@ -198,7 +198,7 @@ async def _eval(sender,arg):
                 
             return obj
         def block(name:str=""):
-            def wrap(*):
+            def wrap(*args):
                 raise Exception(f"{name} is blocked")
             return wrap
         inp=lambda x="":"Input"
