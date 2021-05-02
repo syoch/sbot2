@@ -211,7 +211,7 @@ async def _eval(sender,arg):
                 raise Exception(f"{name} is blocked")
             return wrap
         def myOpen(path,modifier="r"):
-            if path=="main.py":
+            if pathlib.Path(path).name=="main.py":
                 raise Exception("can't open main.py.")
             return open(path,modifier)
         inp=lambda x="":"Input"
