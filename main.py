@@ -189,14 +189,14 @@ async def _eval(sender,arg):
             return range(a,b,c)
         def myImport(name):
             if name == "subprocess":
-                obj = None
+                raise Exception("module subprocess is blocked")
             else:
                 obj = __import__(name)
                 
             if name=="sys":
-                obj.exit=myExit
-            else name=="os":
-                obj.system=lambda x="":"system() is blocked"
+                obj.exit = myExit
+            elif name=="os":
+                obj.system = lambda x="":"system() is blocked"
                 
             return obj
         inp=lambda x="":"Input"
@@ -209,7 +209,8 @@ async def _eval(sender,arg):
                 "buf":buf,
                 "input":inp,
                 "exit":myExit,
-                "range":myRange,""
+                "range":myRange,
+                "__import__":myImport
             }
         )
         stdout=buf.getvalue()
