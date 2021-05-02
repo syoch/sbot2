@@ -229,7 +229,8 @@ async def _eval(sender,arg):
                 "__import__":myImport,
                 "exec":block("exec()"),
                 "open":myOpen,
-                "globals":lambda :{}
+                "globals":block("globals"),
+                "locals":block("locals")
             }
         )
         stdout=buf.getvalue()
