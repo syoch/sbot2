@@ -98,6 +98,7 @@ async def on_message(msg):
     prefix=content.split("@")[0][2:]
     command=content.split("@")[1].split(" ")[0]
     arguments=content.split("@")[1].split(" ")[1:]
+    print("command has invoked by ",msg.author,",command : ",prefix, command,arguments)
     async def token_filter(content,**kwargs):
         content=content.replace(TOKEN,"<TOKEN>")
         return await msg.channel.send(content,**kwargs)
