@@ -217,22 +217,25 @@ async def _eval(sender,arg):
         inp=lambda x="":"Input"
         src=re.sub(r"print\(([^\)]*)\)",r"print(\1,file=buf)",src)
         bakbuiltins=__builtins__
-        ret=eval(
-            src,
-            {},
-            {
-                "__builtins__":{},
-                "buf":buf,
-                "input":inp,
-                "exit":block("exit()"),
-                "range":myRange,
-                "__import__":myImport,
-                "exec":block("exec()"),
-                "open":myOpen,
-                "globals":block("globals"),
-                "locals":block("locals")
-            }
-        )
+        try:
+            ret=eval(
+                src,
+                {},
+                {
+                    "__builtins__":{},
+                    "buf":buf,
+                    "input":inp,
+                    "exit":block("exit()"),
+                    "range":myRange,
+                    "__import__":myImport,
+                    "exec":block("exec()"),
+                    "open":myOpen,
+                    "globals":block("globals"),
+                    "locals":block("locals")
+                }
+            )
+        except Exception as ex:
+            error=str(ex)
         stdout=buf.getvalue()
     elif laun=="js":
         src=src.replace("\"","\\\"")
