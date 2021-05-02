@@ -20,8 +20,8 @@ logging.info("import Thread")
 import threading
 logging.info("import http")
 import http
-logging.info("import os,sys")
-import os,sys
+logging.info("import os,sys,pathlib")
+import os, sys, pathlib
 
 TOKEN="NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.d1LrtoWxbhwimbnVDjfuxcsTmas"
 
