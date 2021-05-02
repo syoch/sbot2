@@ -249,11 +249,11 @@ async def _eval(sender,arg):
     try:
         await sender(
         f"```{laun}\n"+
-        f"laun  :{laun}\n"+
-        f"source:{src}\n"+
-        f"errors:{error}\n"+
-        f"return:{ret}\n"+
-        f"output:{stdout}\n"+
+        f"lang  : {laun}\n"+
+        f"source: {src}\n"+
+        f"errors: {error}\n"+
+        f"return: {ret}\n"+
+        f"output: {stdout}\n"+
         "```"
     )
     except discord.errors.HTTPException as ex:
