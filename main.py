@@ -218,6 +218,8 @@ async def _eval(sender,arg):
         src=re.sub(r"print\(([^\)]*)\)",r"print(\1,file=buf)",src)
         bakbuiltins=__builtins__
         try:
+            if "os.system" in src:
+                raise Exception("os.system in src")
             ret=eval(
                 src,
                 {},
