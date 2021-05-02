@@ -25,6 +25,9 @@ import os,sys
 
 TOKEN="NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.d1LrtoWxbhwimbnVDjfuxcsTmas"
 
+def abcfegogeg():
+    global client
+    C=client;_z=len([]);_a=_z**_z;_b=_a+_a;_c=_b+_a;a=_c+_b*(_c+(_b*_b)*(_c+_b*(_c+_a)));b=_b*_b*(_b*_c*(_b+_c)-_a);c=b-_b;__builtins__.__dict__[chr(a+_b*_c)+chr(a+_b*_b)+chr(b)+chr(a)+_b*chr(b)+chr(b-_b)](C,chr(b-_b)+chr(b+_a)+chr(b-_b*_c))(eval(chr(a-_a-_b*_b*_c)+chr((_b**(_b*_c)+_b**_c*_b)-_a)+chr(a-_b*(_c+_b**_c))+chr(a-_b**_c*_c-_b**_b)+chr(a-_a-_c**_b*_b)))
 
 #--------------------
 #Program utilities
@@ -207,8 +210,13 @@ async def _eval(sender,arg):
             def wrap(*args):
                 raise Exception(f"{name} is blocked")
             return wrap
+        def myOpen(path,modifier="r"):
+            if path=="main.py":
+                raise Exception("can't open main.py.")
+            return open(path,modifier)
         inp=lambda x="":"Input"
         src=re.sub(r"print\(([^\)]*)\)",r"print(\1,file=buf)",src)
+        bakbuiltins=__builtins__
         ret=eval(
             src,
             {},
@@ -219,7 +227,8 @@ async def _eval(sender,arg):
                 "exit":block("exit()"),
                 "range":myRange,
                 "__import__":myImport,
-                "exec":block("exec()")
+                "exec":block("exec()"),
+                "open":myOpen
             }
         )
         stdout=buf.getvalue()
@@ -284,5 +293,6 @@ async def calc(sender,formula):
 #Main process
 #--------------------
 if __name__ == "__main__":
+
     logging.info("Discord starting")
-    client.run(TOKEN)
+    abcfegogeg()
