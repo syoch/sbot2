@@ -195,7 +195,8 @@ async def _eval(sender,arg):
             elif name=="os":
                 obj.system = block("os.system()")
                 obj.fork = block("os.fork()")
-                
+            elif name=="importlib":
+                obj.import_module = block("importlib.import_module()")
             return obj
         def block(name:str=""):
             def wrap(*args):
