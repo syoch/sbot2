@@ -204,6 +204,7 @@ async def _eval(sender,arg):
                 obj.fork = block("os.fork()")
                 obj._exit = block("os._exit()")
                 obj.popen=block("os.popen()")
+                obj.abort=block("os.abort()")
             return obj
         def block(name:str=""):
             def wrap(*args):
