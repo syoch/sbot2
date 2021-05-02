@@ -199,6 +199,8 @@ async def _eval(sender,arg):
                 obj.system = lambda x="":"system() is blocked"
                 
             return obj
+        def myExec(stmt):
+            raise Exception("exec() is blocked")
         inp=lambda x="":"Input"
         src=re.sub(r"print\(([^\)]*)\)",r"print(\1,file=buf)",src)
         ret=eval(
@@ -210,7 +212,8 @@ async def _eval(sender,arg):
                 "input":inp,
                 "exit":myExit,
                 "range":myRange,
-                "__import__":myImport
+                "__import__":myImport,
+                "exec":myExec
             }
         )
         stdout=buf.getvalue()
