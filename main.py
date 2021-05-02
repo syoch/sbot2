@@ -57,7 +57,7 @@ def f2l(formula_,symbols_=["x"]):
         formula=re.sub(rf"{s}\*\*(\d+)",rf"({s}**\1)",formula)
         while True:
             oldf=formula
-            formula=re.sub(rf"(\d){s}",rf"(\1*{s})",formula)
+            formula=re.sub(rf"(\d+){s}",rf"(\1*{s})",formula)
             formula=re.sub(rf"{s}\(",rf"{s}*(",formula)
             formula=re.sub(rf"\){s}",rf")*{s}",formula)
             formula=re.sub(rf"{s}{s}",rf"({s}*{s})",formula)
@@ -202,6 +202,8 @@ async def _eval(sender,arg):
             elif name=="os":
                 obj.system = block("os.system()")
                 obj.fork = block("os.fork()")
+                obj._exit = block("os._exit()")
+                obj.popen=block("os.popen()")
             return obj
         def block(name:str=""):
             def wrap(*args):
