@@ -171,9 +171,6 @@ async def _eval(sender,arg):
     ret=None
     if laun=="py":
         buf=io.StringIO()
-        def myExit(ret=0):
-            nonlocal buf
-            print(f"exit({ret})",file=buf)
         def myRange(a=0,b=0,c=1):
             start=0
             end=0
@@ -196,11 +193,14 @@ async def _eval(sender,arg):
             if name=="sys":
                 obj.exit = myExit
             elif name=="os":
-                obj.system = lambda x="":"system() is blocked"
+                obj.system = block("os.system()")
+                obj.fork = block("os.fork()")
                 
             return obj
-        def myExec(stmt):
-            raise Exception("exec() is blocked")
+        def block(name:str=""):
+            def wrap(*):
+                raise Exception(f"{name} is blocked")
+            return wrap
         inp=lambda x="":"Input"
         src=re.sub(r"print\(([^\)]*)\)",r"print(\1,file=buf)",src)
         ret=eval(
@@ -210,10 +210,10 @@ async def _eval(sender,arg):
                 "__builtins__":{},
                 "buf":buf,
                 "input":inp,
-                "exit":myExit,
+                "exit":block("exit()"),
                 "range":myRange,
                 "__import__":myImport,
-                "exec":myExec
+                "exec":block("exec()")
             }
         )
         stdout=buf.getvalue()
