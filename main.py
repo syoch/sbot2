@@ -228,6 +228,25 @@ async def _eval(sender,arg):
         orgImport=VMglobal["__builtins__"].__import__
         VMglobal["__builtins__"].__import__=myImport
         try:
+            # check (ListComp attack)
+            for node in ast.walk(ast.parse(src)):
+                if type(node) == ast.ListComp:
+                    iters=[]
+                    for generator in node.generators:
+                        iters.append(generator.iter.id)
+
+                    calls=[]
+                    for node2 in ast.walk(node.elt):
+                        if type(node2) == ast.Call:
+                            calls.append(node2)
+
+                    for call in calls:
+                        if call.func.attr!="append":
+                            continue
+                        if call.func.value.id not in iters:
+                            continue
+
+                        raise Exception("ListComp Attack has detected!!!")
             ret=eval(
                 src,
                 VMglobal,
