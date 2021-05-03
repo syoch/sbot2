@@ -1,6 +1,11 @@
 from discord.ext import commands
 import state
 
+import ast
+import re
+import io
+import pathlib
+
 class Util(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
