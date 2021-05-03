@@ -82,12 +82,12 @@ class Util(commands.Cog):
                     raise Exception(f"{name} is blocked")
                 return wrap
 
-            def myOpen(path, modifier="r"):
+            def myOpen(path, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None):
                 if pathlib.Path(path).name == "main.py":
                     raise Exception("can't open main.py.")
                 if pathlib.Path(path).name == "token":
                     raise Exception("can't open token.")
-                return open(path, modifier)
+                return open(path, mode,buffering,encoding,errors,newline,closefd,opener)
             inp = lambda x="": "Input"
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
