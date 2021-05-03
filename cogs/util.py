@@ -92,7 +92,7 @@ class Util(commands.Cog):
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
             orgImport = __import__
-
+            orgOpen = open
             VMbuiltins = __builtins__
             VMbuiltins["__import__"] = myImport
             VMbuiltins["open"] = myOpen
@@ -144,6 +144,7 @@ class Util(commands.Cog):
                 error = str(ex)
 
             VMbuiltins["__import__"] = orgImport
+            VMbuiltins["open"] = orgOpen
 
             stdout = buf.getvalue()
         else:
