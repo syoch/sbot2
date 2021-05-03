@@ -12,7 +12,8 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 INITIAL_EXTENSIONS=[
     "cogs.main",
-    "cogs.admin"
+    "cogs.admin",
+    "cogs.util",
 ]
 class MyBot(commands.Bot):
     def __init__(self, command_prefix):
