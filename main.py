@@ -208,6 +208,8 @@ async def _eval(sender,arg):
                 raise Exception("module pip is blocked")
             elif name=="socket":
                 raise Exception("module socket is blocked")
+            elif name=="urllib":
+                raise Exception("module urllib is blocked")
             else:
                 obj = orgImport(name,_globals,_locals,fromlist,level)
                 
