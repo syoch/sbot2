@@ -73,10 +73,10 @@ class Util(commands.Cog):
                     obj.getcwd = block("os.getcwd()")
                     obj.open = block("os.open()")
                     obj.fdopen = block("os.fdopen()")
-                elif basename == "io":
-                    obj.open = block("io.open()")
-                    obj.open_code = block("io.open_code()")
-                    obj.FileIO = block("io.FileIO()")
+                elif basename == "io" or basename=="_io":
+                    obj.open = block(basename+".open()")
+                    obj.open_code = block(basename+".open_code()")
+                    obj.FileIO = block(basename+".FileIO()")
                 return obj
 
             def block(name: str = ""):
