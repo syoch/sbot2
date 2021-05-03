@@ -11,7 +11,8 @@ logging.info("setup signal handler...")
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 INITIAL_EXTENSIONS=[
-    "cogs.main"
+    "cogs.main",
+    "cogs.admin"
 ]
 class MyBot(commands.Bot):
     def __init__(self, command_prefix):
