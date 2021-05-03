@@ -2,6 +2,7 @@ import logging
 import signal
 from discord.ext import commands
 import traceback
+import state
 
 logging.basicConfig(
     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)

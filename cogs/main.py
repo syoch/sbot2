@@ -13,6 +13,7 @@ import numpy
 import matplotlib.pyplot as plt
 
 from util.f2l import f2l
+import state
 
 class Main(commands.Cog):
     def __init__(self, bot):
