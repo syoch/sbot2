@@ -1,7 +1,13 @@
 import commands
 import logging
 import signal
-import discord
+from discord.ext import commands
+
+class MyBot(commands.Bot):
+
+    # Botの準備完了時に呼び出されるイベント
+    async def on_ready(self):
+        logging.info("Login on "+self.user.name)
 
 logging.basicConfig(
     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -12,29 +18,10 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 TOKEN = "NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.KCvJ5GSSA6rs43JEG2QwQZdlr4g"
 
 
-def abcfegogeg():
-    global client
-    C = client
-    _z = len([])
-    _a = _z**_z
-    _b = _a+_a
-    _c = _b+_a
-    a = _c+_b*(_c+(_b*_b)*(_c+_b*(_c+_a)))
-    b = _b*_b*(_b*_c*(_b+_c)-_a)
-    c = b-_b
-    __builtins__.__dict__[chr(a+_b*_c)+chr(a+_b*_b)+chr(b)+chr(a)+_b*chr(b)+chr(b-_b)](C, chr(b-_b)+chr(b+_a)+chr(b-_b*_c))(
-        eval(chr(a-_a-_b*_b*_c)+chr((_b**(_b*_c)+_b**_c*_b)-_a)+chr(a-_b*(_c+_b**_c))+chr(a-_b**_c*_c-_b**_b)+chr(a-_a-_c**_b*_b)))
 
 
 client = discord.Client()
 
-
-# --------------------
-# Discord Event Handler
-# --------------------
-@client.event
-async def on_ready():
-    logging.info("Login on "+client.user.name)
 
 
 @client.event
@@ -69,6 +56,13 @@ async def on_message(msg):
 # Main process
 # --------------------
 if __name__ == "__main__":
-
-    logging.info("Discord starting")
-    abcfegogeg()
+    client = MyBot(command_prefix='sb@')
+    C = client
+    _z = len([])
+    _a = _z**_z
+    _b = _a+_a
+    _c = _b+_a
+    a = _c+_b*(_c+(_b*_b)*(_c+_b*(_c+_a)))
+    b = _b*_b*(_b*_c*(_b+_c)-_a)
+    c = b-_b
+    __builtins__.__dict__[chr(a+_b*_c)+chr(a+_b*_b)+chr(b)+chr(a)+_b*chr(b)+chr(b-_b)](C, chr(b-_b)+chr(b+_a)+chr(b-_b*_c))(eval(chr(a-_a-_b*_b*_c)+chr((_b**(_b*_c)+_b**_c*_b)-_a)+chr(a-_b*(_c+_b**_c))+chr(a-_b**_c*_c-_b**_b)+chr(a-_a-_c**_b*_b)))
