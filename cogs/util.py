@@ -85,6 +85,8 @@ class Util(commands.Cog):
             def myOpen(path, modifier="r"):
                 if pathlib.Path(path).name == "main.py":
                     raise Exception("can't open main.py.")
+                if pathlib.Path(path).name == "token":
+                    raise Exception("can't open token.")
                 return open(path, modifier)
             inp = lambda x="": "Input"
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
