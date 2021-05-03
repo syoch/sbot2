@@ -95,6 +95,7 @@ class Util(commands.Cog):
 
             VMbuiltins = __builtins__
             VMbuiltins["__import__"] = myImport
+            VMbuiltins["open"] = myOpen
 
             try:
                 # check (ListComp attack)
