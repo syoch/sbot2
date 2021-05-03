@@ -41,7 +41,7 @@ async def on_ready():
 
 @client.event
 async def on_message(msg):
-    if(msg.author == clientsender.user):
+    if(msg.author == client.user):
         return
     a = (msg.content+" ").index(" ")
     content = msg.content[:a].lower()+msg.content[a:]

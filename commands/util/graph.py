@@ -3,6 +3,8 @@ import util
 import io
 import matplotlib.pyplot as plt
 import math
+from util.f2l import f2l
+import discord
 
 async def graph(sender, args):
     s = -10
@@ -24,7 +26,7 @@ async def graph(sender, args):
             _formula.append(arg)
     formula = "".join(_formula)
     x = numpy.linspace(s, e, math.ceil(1000*(e-s)))
-    ff = util.f2l(formula)
+    ff = f2l(formula)
     f = ff[1]
     plt.figure()
     plt.title("f(x)="+formula)

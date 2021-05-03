@@ -1,4 +1,8 @@
 import re
+import numpy
+import math
+
+
 def f2l(formula_, symbols_=["x"]):
     """
     formula_ type is str

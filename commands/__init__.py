@@ -1,8 +1,8 @@
 from .general import general
 from .util import util
 
-async def command(sender,command,arguments):
+async def command(sender,prefix,command,arguments):
     if(prefix == 'u'):
-        await util(token_filter, command, arguments)
+        await util(sender, command, arguments)
     elif(prefix == "g"):
-        await general(token_filter, command, arguments)
+        await general(sender, command, arguments)
