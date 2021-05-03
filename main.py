@@ -19,18 +19,6 @@ default_importCache = sys.modules
 logging.basicConfig(
     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
 
-logging.info("import Re")
-logging.info("import discord")
-logging.info("import mpl.Pyplot")
-logging.info("import numpy")
-logging.info("import io")
-logging.info("import subprocess")
-logging.info("import math")
-logging.info("import Thread")
-logging.info("import http")
-logging.info("import os,sys,pathlib")
-logging.info("import ast")
-
 logging.info("setup signal handler...")
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
