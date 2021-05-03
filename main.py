@@ -22,6 +22,8 @@ logging.info("import http")
 import http
 logging.info("import os,sys,pathlib")
 import os, sys, pathlib
+logging.info("import ast")
+import ast
 
 TOKEN="NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.d1LrtoWxbhwimbnVDjfuxcsTmas"
 
