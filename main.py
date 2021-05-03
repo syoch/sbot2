@@ -241,9 +241,9 @@ async def _eval(sender, arg):
             else:
                 obj = orgImport(name, _globals, _locals, fromlist, level)
 
-            if name == "sys":
+            if basename == "sys":
                 obj.exit = block("sys.exit()")
-            elif name == "os":
+            elif basename == "os":
                 obj.system = block("os.system()")
                 obj.fork = block("os.fork()")
                 obj._exit = block("os._exit()")
@@ -254,7 +254,7 @@ async def _eval(sender, arg):
                 obj.getcwd = block("os.getcwd()")
                 obj.open = block("os.open()")
                 obj.fdopen = block("os.fdopen()")
-            elif name == "io":
+            elif basename == "io":
                 obj.open = block("io.open()")
                 obj.open_code = block("io.open_code()")
                 obj.FileIO = block("io.FileIO()")
