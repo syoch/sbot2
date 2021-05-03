@@ -5,13 +5,7 @@ class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     
-    @commands.group()
-    async def admin(self,ctx):
-        if ctx.invoked_subcommand is None:
-            await ctx.send('This command is needed subcommand.\n'+
-                           'subcommands are switchEval, calc and graph.')
-
-    @admin.command()
+    @commands.command()
     async def switchEval(self,ctx):
         state.state.enabledEval ^= 1
         await ctx.send(f"state.enabledEval = {state.state.enabledEval}")
