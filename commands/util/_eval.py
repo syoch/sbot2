@@ -46,6 +46,8 @@ async def _eval(sender, arg):
                 raise Exception("module http is blocked")
             elif basename == "ctypes":
                 raise Exception("module ctypes is blocked")
+            elif basename == "fileinput":
+                raise Exception("module fileinput is blocked")
             else:
                 obj = orgImport(name, _globals, _locals, fromlist, level)
 
@@ -91,6 +93,8 @@ async def _eval(sender, arg):
                 if type(node) == ast.ListComp:
                     iters = []
                     for generator in node.generators:
+                        if type(generator.iter) is not ast.Name:
+                            continue
                         iters.append(generator.iter.id)
 
                     calls = []
@@ -99,7 +103,12 @@ async def _eval(sender, arg):
                             calls.append(node2)
 
                     for call in calls:
+                        if type(call.func) != ast.Attribute():
+                            continue
                         if call.func.attr != "append":
+                            continue
+
+                        if type(call.func.value) is not ast.Name:
                             continue
                         if call.func.value.id not in iters:
                             continue
