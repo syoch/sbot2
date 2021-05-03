@@ -14,6 +14,7 @@ class Admin(commands.Cog):
     @admin.command()
     async def switchEval(self,ctx):
         state.state.enabledEval ^= 1
+        await ctx.send(f"state.enabledEval = {state.state.enabledEval}")
 
     async def check_cog(self, ctx):
         if ctx.author.id=="524516049752686592":
