@@ -25,6 +25,10 @@ import os, sys, pathlib
 logging.info("import ast")
 import ast
 
+logging.info("setup signal handler...")
+import signal
+signal.signal(signal.SIGINT,signal.SIG_DFL)
+
 TOKEN="NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.d1LrtoWxbhwimbnVDjfuxcsTmas"
 
 def abcfegogeg():
