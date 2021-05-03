@@ -227,6 +227,9 @@ async def _eval(sender,arg):
                 obj.getcwd=block("os.getcwd()")
                 obj.open=block("os.open()")
                 obj.fdopen=block("os.fdopen()")
+            elif name=="io":
+                obj.open=block("io.open()")
+                obj.open_code=block("io.open_code()")
             return obj
         def block(name:str=""):
             def wrap(*args):
