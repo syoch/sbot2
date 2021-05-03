@@ -200,6 +200,10 @@ async def _eval(sender,arg):
         def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
             if name == "subprocess":
                 raise Exception("module subprocess is blocked")
+            elif name=="importlib":
+                raise Exception("module importlib is blocked")
+            elif name=="imp":
+                raise Exception("module imp is blocked")
             else:
                 obj = orgImport(name,_globals,_locals,fromlist,level)
                 
