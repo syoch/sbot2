@@ -14,6 +14,7 @@ INITIAL_EXTENSIONS=[
     "cogs.main",
     "cogs.admin",
     "cogs.util",
+    "cogs._math",
 ]
 class MyBot(commands.Bot):
     def __init__(self, command_prefix):
