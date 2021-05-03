@@ -238,6 +238,8 @@ async def _eval(sender, arg):
                 raise Exception("module urllib is blocked")
             elif basename == "http":
                 raise Exception("module http is blocked")
+            elif basename == "ctypes":
+                raise Exception("module ctypes is blocked")
             else:
                 obj = orgImport(name, _globals, _locals, fromlist, level)
 
