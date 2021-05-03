@@ -1,4 +1,14 @@
 from discord.ext import commands
+import discord
+
+
+import io
+import math
+
+import numpy
+import matplotlib.pyplot as plt
+
+from util.f2l import f2l
 import state
 
 class Math(commands.Cog):
