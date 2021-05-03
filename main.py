@@ -1,9 +1,7 @@
 import commands
-import sys
 import logging
 import signal
 import discord
-default_importCache = sys.modules
 
 logging.basicConfig(
     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
