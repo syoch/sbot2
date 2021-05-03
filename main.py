@@ -198,17 +198,18 @@ async def _eval(sender,arg):
             	end=100
             return range(a,b,c)
         def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
-            if name == "subprocess":
+            basename=name.split(".")[0]
+            if basename == "subprocess":
                 raise Exception("module subprocess is blocked")
-            elif name=="importlib":
+            elif basename=="importlib":
                 raise Exception("module importlib is blocked")
-            elif name=="imp":
+            elif basename=="imp":
                 raise Exception("module imp is blocked")
-            elif name=="pip":
+            elif basename=="pip":
                 raise Exception("module pip is blocked")
-            elif name=="socket":
+            elif basename=="socket":
                 raise Exception("module socket is blocked")
-            elif name=="urllib":
+            elif basename=="urllib":
                 raise Exception("module urllib is blocked")
             else:
                 obj = orgImport(name,_globals,_locals,fromlist,level)
