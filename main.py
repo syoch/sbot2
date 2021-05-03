@@ -59,7 +59,7 @@ async def on_message(msg):
         content = content.replace(TOKEN, "<TOKEN>")
         return await msg.channel.send(content, **kwargs)
     try:
-        commands.command(token_filter,command,arguments)
+        await commands.command(token_filter,prefix,command,arguments)
     except Exception as ex:
         await msg.channel.send("Errrrrrror Whhiiiileee Command execute")
         await token_filter(str(ex.args))
