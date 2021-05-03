@@ -275,13 +275,13 @@ async def _eval(sender,arg):
             error=str(ex)
         VMglobal["__builtins__"].__import__=orgImport
         stdout=buf.getvalue()
-    elif laun=="js":
-        src=src.replace("\"","\\\"")
-        tmp=subprocess.check_output("js -e \"console.log((()=>{return "+src+"})())\"")\
-             .decode().split("\n")[0:-1]
-        outs=tmp[0:-1]
-        ret=tmp[-1]
-        stdout="\n".join(outs)
+    # elif laun=="js":
+    #     src=src.replace("\"","\\\"")
+    #     tmp=subprocess.check_output("js -e \"console.log((()=>{return "+src+"})())\"")\
+    #          .decode().split("\n")[0:-1]
+    #     outs=tmp[0:-1]
+    #     ret=tmp[-1]
+    #     stdout="\n".join(outs)
     else:
         error="unknown laun"
     try:
