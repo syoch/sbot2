@@ -1,18 +1,8 @@
 from discord.ext import commands
 import discord
 
-import io
-import math
-import sys
-import pathlib
-import re
-import ast
 import logging
 
-import numpy
-import matplotlib.pyplot as plt
-
-from util.f2l import f2l
 import state
 
 class Main(commands.Cog):
