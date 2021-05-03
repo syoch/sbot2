@@ -113,7 +113,7 @@ class Main(commands.Cog):
     @util.command(name="eval")
     async def _eval(sender,ctx, language:str, *,src):
         if not state.state.enabledEval:
-            ctx.send("eval is disabled")
+            await ctx.send("eval is disabled")
             return
         error = ""
         stdout = ""
