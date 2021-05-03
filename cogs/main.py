@@ -8,7 +8,6 @@ import state
 class Main(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.qualified_name="general"
 
     @commands.Cog.listener(name='on_message')
     async def good_reaction(self, message):

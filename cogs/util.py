@@ -9,7 +9,6 @@ import pathlib
 class Util(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.qualified_name="utilities"
 
     @commands.command(name="eval")
     async def _eval(sender,ctx, language:str, *,src):
