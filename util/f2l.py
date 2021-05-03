@@ -17,7 +17,7 @@ def f2l(formula_, symbols_=["x"]):
     formula = re.sub(r"\|\-?(.*)\|", r"abs(\1)", formula)
     formula = formula.replace("^", "**")
     formula = re.sub(r"log\(([^\)]*)\)", r"log(\1)", formula)
-    formula = re.sub(r"log\[([^\]]*)\]\(([^\)]*)\)",
+    formula = re.sub(r"log([^\]]*)\(([^\)]*)\)",
                      r"log(\2)/log(\1)", formula)
     formula = formula.replace("asin", "arcsin")
     formula = formula.replace("acos", "arccos")
