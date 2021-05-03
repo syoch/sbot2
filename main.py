@@ -105,7 +105,6 @@ client = discord.Client()
 @client.event
 async def on_ready():
     logging.info("Login on "+client.user.name)
-    await client.change_presence(status=discord.Status.offline)
 
 
 @client.event
