@@ -3,6 +3,7 @@ import io
 import re
 import ast
 import discord
+import sys
 
 async def _eval(sender, arg):
     laun = arg[0]
@@ -79,13 +80,10 @@ async def _eval(sender, arg):
         inp = lambda x="": "Input"
         src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
-        VMglobal = {}
-        VMglobal["__builtins__"] = globals()["__builtins__"]
-        orgImport = VMglobal["__builtins__"].__import__
-        VMglobal["__builtins__"].__import__ = myImport
+        orgImport = __import__
 
-        org_modules = sys.modules
-        sys.modules = default_importCache
+        VMbuiltins = __builtins__
+        VMbuiltins["__import__"] = myImport
 
         try:
             # check (ListComp attack)
@@ -109,7 +107,9 @@ async def _eval(sender, arg):
                         raise Exception("ListComp Attack has detected!!!")
             ret = eval(
                 src,
-                VMglobal,
+                {
+                    "__builtins__": VMbuiltins
+                },
                 {
                     "buf": buf,
                     "input": inp,
@@ -124,8 +124,7 @@ async def _eval(sender, arg):
         except Exception as ex:
             error = str(ex)
 
-        VMglobal["__builtins__"].__import__ = orgImport
-        sys.modules = org_modules
+        VMbuiltins["__import__"] = orgImport
 
         stdout = buf.getvalue()
     else:
