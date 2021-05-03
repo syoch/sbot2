@@ -258,6 +258,7 @@ async def _eval(sender, arg):
             elif name == "io":
                 obj.open = block("io.open()")
                 obj.open_code = block("io.open_code()")
+                obj.FileIO = block("io.FileIO()")
             return obj
 
         def block(name: str = ""):
