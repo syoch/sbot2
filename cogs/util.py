@@ -55,6 +55,8 @@ class Util(commands.Cog):
                     raise Exception("module ctypes is blocked")
                 elif basename == "fileinput":
                     raise Exception("module fileinput is blocked")
+                elif basename == "pathlib":
+                    raise Exception("module pathlib is blocked")
                 else:
                     obj = orgImport(name, _globals, _locals, fromlist, level)
 
