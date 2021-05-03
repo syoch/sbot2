@@ -9,11 +9,6 @@ logging.basicConfig(
 logging.info("setup signal handler...")
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-# TOKEN
-if 1==1:
-    TOKEN = "NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.KCvJ5GSSA6rs43JEG2QwQZdlr4g"
-    pass
-
 INITIAL_EXTENSIONS=[
     "cogs.main"
 ]
@@ -32,5 +27,6 @@ class MyBot(commands.Bot):
 
 if __name__ == "__main__":
     client = MyBot(command_prefix=('sb@'))
-    client.run(TOKEN)
+    with open("token","r") as fp:
+        client.run(fp.read())
     
