@@ -100,7 +100,7 @@ class Main(commands.Cog):
 
         buf = io.BytesIO(b'')
         plt.savefig(buf)
-        await ctx.send("@"+str(ctx.author)+"`"+ff[0]+"`", file=discord.File(io.BytesIO(buf.getvalue()), filename="graph.png"))
+        await ctx.send(f"<@!{ctx.author.id}>"+"`"+ff[0]+"`", file=discord.File(io.BytesIO(buf.getvalue()), filename="graph.png"))
     
     @util.command()
     async def calc(self, ctx, *,formula):
