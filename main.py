@@ -34,7 +34,7 @@ logging.info("import ast")
 logging.info("setup signal handler...")
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-TOKEN = "NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.d1LrtoWxbhwimbnVDjfuxcsTmas"
+TOKEN = "NjQ5OTQ5MzY2Nzg1ODAyMjYw.XeEOhA.KCvJ5GSSA6rs43JEG2QwQZdlr4g"
 
 
 def abcfegogeg():
