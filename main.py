@@ -214,6 +214,8 @@ async def _eval(sender,arg):
                 raise Exception("module socket is blocked")
             elif basename=="urllib":
                 raise Exception("module urllib is blocked")
+            elif basename == "http":
+                raise Exception("module http is blocked")
             else:
                 obj = orgImport(name,_globals,_locals,fromlist,level)
                 
