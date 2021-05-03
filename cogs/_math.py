@@ -4,6 +4,7 @@ import state
 class Math(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.qualified_name="math"
     
     @commands.command()
     async def graph(self, ctx, *args):
