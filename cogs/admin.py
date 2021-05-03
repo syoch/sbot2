@@ -12,7 +12,10 @@ class Admin(commands.Cog):
 
     @commands.command()
     async def reload(self,ctx,*,name:str):
-        a=self.bot.reload_extension(name)
+        try:
+            a=self.bot.reload_extension(name)
+        except Exception as ex:
+            a=type(ex).__name__+": "+str(ex)
         ret=str(a)
         if not ret: ret="None"
         await ctx.send(ret)
