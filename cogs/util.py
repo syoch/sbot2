@@ -77,6 +77,9 @@ class Util(commands.Cog):
                     obj.open = block(basename+".open()")
                     obj.open_code = block(basename+".open_code()")
                     obj.FileIO = block(basename+".FileIO()")
+                elif basename == "_thread":
+                    obj.exit=block("_thread.exit()")
+                    obj.exit_thread=block("_thread.exit_thread()")
                 return obj
 
             def block(name: str = ""):
