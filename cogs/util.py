@@ -35,7 +35,17 @@ class Util(commands.Cog):
                 "file":[
                     "main.py",
                     "token",
-                ]
+                ],
+                "builtinFuncs":{
+                    "__import__":"myImport",
+                    "range":"myRange",
+                    "open":"myOpen",
+                    "globals":None,
+                    "locals":None,
+                    "input":None,
+                    "exit":None,
+                    "exec":None,
+                }
             }
             buf = io.StringIO()
 
@@ -58,7 +68,7 @@ class Util(commands.Cog):
                 if basename in utilConf["module"]:
                     raise Exception(f"Module {basename} is blocked.")
                 else:
-                    obj = org___import__(name, _globals, _locals, fromlist, level)
+                    obj = org["__import__"](name, _globals, _locals, fromlist, level)
 
                 if basename == "sys":
                     obj.exit = block("sys.exit()")
@@ -97,24 +107,13 @@ class Util(commands.Cog):
             
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
-            org___import__ = __builtins__["__import__"]
-            org_range      = __builtins__["range"]
-            org_open       = __builtins__["open"]
-            org_globals    = __builtins__["globals"]
-            org_locals     = __builtins__["locals"]
-            org_input      = __builtins__["input"]
-            org_exit       = __builtins__["exit"]
-            org_exec       = __builtins__["exec"]
-
-            VMbuiltins = __builtins__
-            VMbuiltins["__import__"] = myImport
-            VMbuiltins[     "range"] = myRange
-            VMbuiltins[      "open"] = myOpen
-            VMbuiltins[   "globals"] = block("globals")
-            VMbuiltins[    "locals"] = block("locals")
-            VMbuiltins[     "input"] = block("input()")
-            VMbuiltins[      "exit"] = block("exit()")
-            VMbuiltins[      "exec"] = block("exec()")
+            org={}
+            for funcname in utilConf["builtinFuncs"]:
+                org[funcname]=__builtins__[funcname]
+                if utilConf["builtinFuncs"][funcname]:
+                    __builtins__[funcname]=locals()[utilConf["builtinFuncs"][funcname]]
+                else:
+                    __builtins__[funcname]=block(funcname+"()")
 
             try:
                 # check (ListComp attack)
@@ -146,7 +145,7 @@ class Util(commands.Cog):
                 ret = eval(
                     src,
                     {
-                        "__builtins__": VMbuiltins
+                        "__builtins__": __builtins__
                     },
                     {
                         "buf": buf,
@@ -155,14 +154,9 @@ class Util(commands.Cog):
             except Exception as ex:
                 error = str(ex)
 
-            __builtins__["__import__"] = org___import__
-            __builtins__[     "range"] = org_range
-            __builtins__[      "open"] = org_open
-            __builtins__[   "globals"] = org_globals
-            __builtins__[    "locals"] = org_locals
-            __builtins__[     "input"] = org_input
-            __builtins__[      "exit"] = org_exit
-            __builtins__[      "exec"] = org_exec
+            for funcname in utilConf["builtinFuncs"]:
+                __builtins__[funcname]=org[funcname]
+    
 
             stdout = buf.getvalue()
         else:
