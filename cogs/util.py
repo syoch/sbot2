@@ -6,12 +6,13 @@ import re
 import io
 import pathlib
 
+
 class Util(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name="eval")
-    async def _eval(sender,ctx, language:str, *,src):
+    async def _eval(sender, ctx, language: str, *, src):
         if not state.state.enabledEval:
             await ctx.send("eval is disabled")
             return
@@ -19,33 +20,33 @@ class Util(commands.Cog):
         stdout = ""
         ret = None
         if language == "py":
-            utilConf={
-                "module":[
+            utilConf = {
+                "module": [
                     "subprocess",
                     "ctypes",
                     "pip",
-                    "importlib","imp",
-                    "socket","urllib","http",
-                    "fileinput","pathlib"
+                    "importlib", "imp",
+                    "socket", "urllib", "http",
+                    "fileinput", "pathlib"
                 ],
-                "file":["main.py","token",],
-                "builtinFuncs":{
-                    "__import__":"myImport",
-                    "range":"myRange",
-                    "open":"myOpen",
-                    "globals":None,
-                    "locals":None,
-                    "input":None,
-                    "exit":None,
-                    "exec":None,
+                "file": ["main.py", "token", ],
+                "builtinFuncs": {
+                    "__import__": "myImport",
+                    "range": "myRange",
+                    "open": "myOpen",
+                    "globals": None,
+                    "locals": None,
+                    "input": None,
+                    "exit": None,
+                    "exec": None,
                 },
-                "funcs":{
-                    "sys"      : ["exit"],
-                    "os"       : ["system","fork","_exit","popen","abort","chdir","fchdir","getcwd","open","fdopen",],
-                    "_thread"  : ["exit","exit_thread"],
-                    "time"     : ["sleep"],
-                    "io"       : ["open","open_code","FileIO"],
-                    "_io"      : ["open","open_code","FileIO"],
+                "funcs": {
+                    "sys": ["exit"],
+                    "os": ["system", "fork", "_exit", "popen", "abort", "chdir", "fchdir", "getcwd", "open", "fdopen", ],
+                    "_thread": ["exit", "exit_thread"],
+                    "time": ["sleep"],
+                    "io": ["open", "open_code", "FileIO"],
+                    "_io": ["open", "open_code", "FileIO"],
                 }
             }
             buf = io.StringIO()
@@ -69,11 +70,13 @@ class Util(commands.Cog):
                 if basename in utilConf["module"]:
                     raise Exception(f"Module {basename} is blocked.")
                 else:
-                    obj = org["__import__"](name, _globals, _locals, fromlist, level)
+                    obj = org["__import__"](
+                        name, _globals, _locals, fromlist, level)
 
                 if basename in utilConf["funcs"]:
                     for funcnames in utilConf["funcs"][basename]:
-                        setattr(obj, funcnames, block(basename+"."+funcnames+"()"))
+                        setattr(obj, funcnames, block(
+                            basename+"."+funcnames+"()"))
                 return obj
 
             def block(name: str = ""):
@@ -82,20 +85,21 @@ class Util(commands.Cog):
                 return wrap
 
             def myOpen(path, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None):
-                basename=pathlib.Path(path).name
+                basename = pathlib.Path(path).name
                 if basename in utilConf["file"]:
                     raise Exception("can't open "+basename+".")
-                return open(path, mode,buffering,encoding,errors,newline,closefd,opener)
-            
+                return open(path, mode, buffering, encoding, errors, newline, closefd, opener)
+
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
-            org={}
+            org = {}
             for funcname in utilConf["builtinFuncs"]:
-                org[funcname]=__builtins__[funcname]
+                org[funcname] = __builtins__[funcname]
                 if utilConf["builtinFuncs"][funcname]:
-                    __builtins__[funcname]=locals()[utilConf["builtinFuncs"][funcname]]
+                    __builtins__[funcname] = locals(
+                    )[utilConf["builtinFuncs"][funcname]]
                 else:
-                    __builtins__[funcname]=block(funcname+"()")
+                    __builtins__[funcname] = block(funcname+"()")
 
             try:
                 # check (ListComp attack)
@@ -137,13 +141,12 @@ class Util(commands.Cog):
                 error = str(ex)
 
             for funcname in utilConf["builtinFuncs"]:
-                __builtins__[funcname]=org[funcname]
-    
+                __builtins__[funcname] = org[funcname]
 
             stdout = buf.getvalue()
         else:
             error = "Unknown laun"
-        
+
         try:
             await ctx.send(
                 f"```{language}\n" +
@@ -155,16 +158,16 @@ class Util(commands.Cog):
                 "```"
             )
         except Exception as ex:
-            await ctx.send("Exception has occured!\n"+
+            await ctx.send("Exception has occured!\n" +
                            str(type(ex))+":"+str(ex))
 
-
     async def check_cog(self, ctx):
-        if ctx.author.id=="524516049752686592":
+        if ctx.author.id == "524516049752686592":
             return True
         else:
             ctx.send("This command is blocked( can use by syoch only )")
             return False
+
 
 def setup(bot):
     bot.add_cog(Util(bot))
