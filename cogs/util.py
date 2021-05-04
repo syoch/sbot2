@@ -45,6 +45,14 @@ class Util(commands.Cog):
                     "input":None,
                     "exit":None,
                     "exec":None,
+                },
+                "funcs":{
+                    "sys"      : ["exit"],
+                    "os"       : ["system","fork","_exit","popen","abort","chdir","fchdir","getcwd","open","fdopen",],
+                    "_thread"  : ["exit","exit_thread"],
+                    "time"     : ["sleep"],
+                    "io.open"  : ["open","open_code","FileIO"],
+                    "_io.open" : ["open","open_code","FileIO"],
                 }
             }
             buf = io.StringIO()
@@ -70,28 +78,9 @@ class Util(commands.Cog):
                 else:
                     obj = org["__import__"](name, _globals, _locals, fromlist, level)
 
-                if basename == "sys":
-                    obj.exit = block("sys.exit()")
-                elif basename == "os":
-                    obj.system = block("os.system()")
-                    obj.fork = block("os.fork()")
-                    obj._exit = block("os._exit()")
-                    obj.popen = block("os.popen()")
-                    obj.abort = block("os.abort()")
-                    obj.chdir = block("os.chdir()")
-                    obj.fchdir = block("os.fchdir()")
-                    obj.getcwd = block("os.getcwd()")
-                    obj.open = block("os.open()")
-                    obj.fdopen = block("os.fdopen()")
-                elif basename == "io" or basename=="_io":
-                    obj.open = block(basename+".open()")
-                    obj.open_code = block(basename+".open_code()")
-                    obj.FileIO = block(basename+".FileIO()")
-                elif basename == "_thread":
-                    obj.exit=block("_thread.exit()")
-                    obj.exit_thread=block("_thread.exit_thread()")
-                elif basename== "time":
-                    obj.sleep=block("time.sleep()")
+                if basename in utilConf["funcs"]:
+                    for funcnames in utilConf["funcs"][basename]:
+                        setattr(obj, funcnames, block(basename+"."+funcnames+"()"))
                 return obj
 
             def block(name: str = ""):
