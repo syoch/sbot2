@@ -19,6 +19,20 @@ class Util(commands.Cog):
         stdout = ""
         ret = None
         if language == "py":
+            utilConf={
+                "module":[
+                    "subprocess",
+                    "importlib",
+                    "imp",
+                    "pip",
+                    "socket",
+                    "urllib",
+                    "http",
+                    "ctypes",
+                    "fileinput",
+                    "pathlib"
+                ]
+            }
             buf = io.StringIO()
 
             def myRange(a=0, b=0, c=1):
@@ -37,26 +51,8 @@ class Util(commands.Cog):
 
             def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
                 basename = name.split(".")[0]
-                if basename == "subprocess":
-                    raise Exception("module subprocess is blocked")
-                elif basename == "importlib":
-                    raise Exception("module importlib is blocked")
-                elif basename == "imp":
-                    raise Exception("module imp is blocked")
-                elif basename == "pip":
-                    raise Exception("module pip is blocked")
-                elif basename == "socket":
-                    raise Exception("module socket is blocked")
-                elif basename == "urllib":
-                    raise Exception("module urllib is blocked")
-                elif basename == "http":
-                    raise Exception("module http is blocked")
-                elif basename == "ctypes":
-                    raise Exception("module ctypes is blocked")
-                elif basename == "fileinput":
-                    raise Exception("module fileinput is blocked")
-                elif basename == "pathlib":
-                    raise Exception("module pathlib is blocked")
+                if basename in utilConf["module"]:
+                    raise Exception("Module {basename} is blocked.")
                 else:
                     obj = orgImport(name, _globals, _locals, fromlist, level)
 
