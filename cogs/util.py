@@ -56,9 +56,9 @@ class Util(commands.Cog):
             def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
                 basename = name.split(".")[0]
                 if basename in utilConf["module"]:
-                    raise Exception("Module {basename} is blocked.")
+                    raise Exception(f"Module {basename} is blocked.")
                 else:
-                    obj = orgImport(name, _globals, _locals, fromlist, level)
+                    obj = org___import__(name, _globals, _locals, fromlist, level)
 
                 if basename == "sys":
                     obj.exit = block("sys.exit()")
@@ -97,11 +97,24 @@ class Util(commands.Cog):
             
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
-            orgImport = __import__
-            orgOpen = open
+            org___import__ = __builtins__["__import__"]
+            org_range      = __builtins__["range"]
+            org_open       = __builtins__["open"]
+            org_globals    = __builtins__["globals"]
+            org_locals     = __builtins__["locals"]
+            org_input      = __builtins__["input"]
+            org_exit       = __builtins__["exit"]
+            org_exec       = __builtins__["exec"]
+
             VMbuiltins = __builtins__
             VMbuiltins["__import__"] = myImport
-            VMbuiltins["open"] = myOpen
+            VMbuiltins[     "range"] = myRange
+            VMbuiltins[      "open"] = myOpen
+            VMbuiltins[   "globals"] = block("globals")
+            VMbuiltins[    "locals"] = block("locals")
+            VMbuiltins[     "input"] = block("input()")
+            VMbuiltins[      "exit"] = block("exit()")
+            VMbuiltins[      "exec"] = block("exec()")
 
             try:
                 # check (ListComp attack)
@@ -137,20 +150,19 @@ class Util(commands.Cog):
                     },
                     {
                         "buf": buf,
-                        "input": block("input()"),
-                        "exit": block("exit()"),
-                        "range": myRange,
-                        "exec": block("exec()"),
-                        "open": myOpen,
-                        "globals": block("globals"),
-                        "locals": block("locals")
                     }
                 )
             except Exception as ex:
                 error = str(ex)
 
-            VMbuiltins["__import__"] = orgImport
-            VMbuiltins["open"] = orgOpen
+            __builtins__["__import__"] = org___import__
+            __builtins__[     "range"] = org_range
+            __builtins__[      "open"] = org_open
+            __builtins__[   "globals"] = org_globals
+            __builtins__[    "locals"] = org_locals
+            __builtins__[     "input"] = org_input
+            __builtins__[      "exit"] = org_exit
+            __builtins__[      "exec"] = org_exec
 
             stdout = buf.getvalue()
         else:
