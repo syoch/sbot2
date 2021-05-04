@@ -94,7 +94,7 @@ class Util(commands.Cog):
                 if basename in utilConf["file"]:
                     raise Exception("can't open "+basename+".")
                 return open(path, mode,buffering,encoding,errors,newline,closefd,opener)
-            inp = lambda x="": "Input"
+            
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
             orgImport = __import__
@@ -137,7 +137,7 @@ class Util(commands.Cog):
                     },
                     {
                         "buf": buf,
-                        "input": inp,
+                        "input": block("input()"),
                         "exit": block("exit()"),
                         "range": myRange,
                         "exec": block("exec()"),
