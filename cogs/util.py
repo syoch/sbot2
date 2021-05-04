@@ -76,6 +76,8 @@ class Util(commands.Cog):
                 elif basename == "_thread":
                     obj.exit=block("_thread.exit()")
                     obj.exit_thread=block("_thread.exit_thread()")
+                elif basename== "time":
+                    obj.sleep=block("time.sleep()")
                 return obj
 
             def block(name: str = ""):
