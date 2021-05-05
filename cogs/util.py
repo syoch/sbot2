@@ -34,6 +34,7 @@ class Util(commands.Cog):
                     "__import__": "myImport",
                     "range": "myRange",
                     "open": "myOpen",
+                    "print": "myPrint",
                     "globals": None,
                     "locals": None,
                     "input": None,
@@ -89,6 +90,10 @@ class Util(commands.Cog):
                 if basename in utilConf["file"]:
                     raise Exception("can't open "+basename+".")
                 return open(path, mode, buffering, encoding, errors, newline, closefd, opener)
+
+            def myPrint(*objects, sep=' ', end='\n', file=sys.stdout, flush=False):
+                nonlocal buf
+                org["print"](*objects,sep=sep,end=end,file=buf,flush=False)
 
             src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
