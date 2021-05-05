@@ -65,7 +65,7 @@ class Util(commands.Cog):
                     end = b
                 if end > 10**10:
                     end = 100
-                return range(a, b, c)
+                return org["range"](a, b, c)
 
             def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
                 basename = name.split(".")[0]
@@ -90,7 +90,7 @@ class Util(commands.Cog):
                 basename = pathlib.Path(path).name
                 if basename in utilConf["file"]:
                     raise Exception("can't open "+basename+".")
-                return open(path, mode, buffering, encoding, errors, newline, closefd, opener)
+                return org["open"](path, mode, buffering, encoding, errors, newline, closefd, opener)
 
             def myPrint(*objects, sep=' ', end='\n', file=buf, flush=False):
                 nonlocal buf
@@ -145,6 +145,7 @@ class Util(commands.Cog):
                 )
             except Exception as ex:
                 error = str(ex)
+                ex.with_traceback()
 
             for funcname in utilConf["builtinFuncs"]:
                 __builtins__[funcname] = org[funcname]
