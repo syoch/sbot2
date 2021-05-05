@@ -92,7 +92,7 @@ class Util(commands.Cog):
                     raise Exception("can't open "+basename+".")
                 return open(path, mode, buffering, encoding, errors, newline, closefd, opener)
 
-            def myPrint(*objects, sep=' ', end='\n', file=sys.stdout, flush=False):
+            def myPrint(*objects, sep=' ', end='\n', file=buf, flush=False):
                 nonlocal buf
                 org["print"](*objects,sep=sep,end=end,file=buf,flush=False)
 
