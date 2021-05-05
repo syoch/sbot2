@@ -96,8 +96,7 @@ class Util(commands.Cog):
             for funcname in utilConf["builtinFuncs"]:
                 org[funcname] = __builtins__[funcname]
                 if utilConf["builtinFuncs"][funcname]:
-                    __builtins__[funcname] = locals(
-                    )[utilConf["builtinFuncs"][funcname]]
+                    __builtins__[funcname] = locals()[utilConf["builtinFuncs"][funcname]]
                 else:
                     __builtins__[funcname] = block(funcname+"()")
 
