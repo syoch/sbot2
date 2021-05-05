@@ -149,7 +149,6 @@ class Util(commands.Cog):
                 )
             except Exception as ex:
                 error = str(ex)
-                ex.with_traceback()
 
             for funcname in utilConf["builtinFuncs"]:
                 __builtins__[funcname] = org[funcname]
