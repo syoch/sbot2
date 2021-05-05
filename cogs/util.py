@@ -96,6 +96,8 @@ class Util(commands.Cog):
                 nonlocal buf
                 org["print"](*objects,sep=sep,end=end,file=buf,flush=False)
 
+            bak_stdout=sys.stdout
+            sys.stdout=buf
 
             org = {}
             for funcname in utilConf["builtinFuncs"]:
@@ -147,6 +149,7 @@ class Util(commands.Cog):
             for funcname in utilConf["builtinFuncs"]:
                 __builtins__[funcname] = org[funcname]
 
+            sys.stdout=bak_stdout
             stdout = buf.getvalue()
         else:
             error = "Unknown laun"
