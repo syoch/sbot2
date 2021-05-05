@@ -65,7 +65,9 @@ class Util(commands.Cog):
                     end = b
                 if end > 10**10:
                     end = 100
-                return org["range"](a, b, c)
+                print
+                ret=org["range"](a, b, c)
+                return 
 
             def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
                 basename = name.split(".")[0]
@@ -110,30 +112,32 @@ class Util(commands.Cog):
             try:
                 # check (ListComp attack)
                 for node in ast.walk(ast.parse(src)):
-                    if type(node) == ast.ListComp:
-                        iters = []
-                        for generator in node.generators:
-                            if type(generator.iter) is not ast.Name:
-                                continue
-                            iters.append(generator.iter.id)
+                    if type(node) != ast.ListComp:
+                        continue
 
-                        calls = []
-                        for node2 in ast.walk(node.elt):
-                            if type(node2) == ast.Call:
-                                calls.append(node2)
+                    iters = []
+                    for generator in node.generators:
+                        if type(generator.iter) is not ast.Name:
+                            continue
+                        iters.append(generator.iter.id)
 
-                        for call in calls:
-                            if type(call.func) != ast.Attribute():
-                                continue
-                            if call.func.attr != "append":
-                                continue
+                    calls = []
+                    for node2 in ast.walk(node.elt):
+                        if type(node2) == ast.Call:
+                            calls.append(node2)
 
-                            if type(call.func.value) is not ast.Name:
-                                continue
-                            if call.func.value.id not in iters:
-                                continue
+                    for call in calls:
+                        if type(call.func) != ast.Attribute:
+                            continue
+                        if call.func.attr != "append":
+                            continue
 
-                            raise Exception("ListComp Attack has detected!!!")
+                        if type(call.func.value) is not ast.Name:
+                            continue
+                        if call.func.value.id not in iters:
+                            continue
+
+                        raise Exception("ListComp Attack has detected!!!")
                 ret = eval(
                     src,
                     {
