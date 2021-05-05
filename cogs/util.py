@@ -96,7 +96,6 @@ class Util(commands.Cog):
                 nonlocal buf
                 org["print"](*objects,sep=sep,end=end,file=buf,flush=False)
 
-            src = re.sub(r"print\(([^\)]*)\)", r"print(\1,file=buf)", src)
 
             org = {}
             for funcname in utilConf["builtinFuncs"]:
