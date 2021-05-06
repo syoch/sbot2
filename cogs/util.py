@@ -65,7 +65,6 @@ class Util(commands.Cog):
                     end = b
                 if end > 10**10:
                     end = 100
-                print
                 ret=org["range"](a, b, c)
                 return 
 
