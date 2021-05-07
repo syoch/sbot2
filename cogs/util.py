@@ -128,7 +128,7 @@ class Util(commands.Cog):
                     for call in calls:
                         if type(call.func) != ast.Attribute:
                             continue
-                        if call.func.attr != "append":
+                        if call.func.attr != "append" and call.func.attr != "extend":
                             continue
 
                         if type(call.func.value) is not ast.Name:
