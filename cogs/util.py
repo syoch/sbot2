@@ -65,8 +65,8 @@ class Util(commands.Cog):
                     end = b
                 if end > 10**10:
                     end = 100
-                ret=org["range"](a, b, c)
-                return 
+                ret=org["range"](start, end, step)
+                return ret
 
             def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
                 basename = name.split(".")[0]
