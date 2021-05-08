@@ -52,6 +52,7 @@ class Util(commands.Cog):
                     "time": ["sleep"],
                     "io": ["open", "open_code", "FileIO"],
                     "_io": ["open", "open_code", "FileIO"],
+                    "tokenize": ["open", "_builtin_open"]
                 }
             }
             buf = io.StringIO()
