@@ -67,7 +67,7 @@ class Util(commands.Cog):
                     end = b
                 if end > 10**10:
                     end = 100
-                ret=org["range"](start, end, step)
+                ret = org["range"](start, end, step)
                 return ret
 
             def myImport(name, _globals=None, _locals=None, fromlist=(), level=0):
@@ -97,20 +97,23 @@ class Util(commands.Cog):
 
             def myPrint(*objects, sep=' ', end='\n', file=buf, flush=False):
                 nonlocal buf
+                org["print"](*objects, sep=sep, end=end, file=buf, flush=False)
+
             def myIter(objects, sentinel=None):
                 if type(objects) == type(lambda: 0):
                     if objects() != sentinel:
                         raise Exception("iter attack has detected!")
                 return iter(objects, sentinel=sentinel)
 
-            bak_stdout=sys.stdout
-            sys.stdout=buf
+            bak_stdout = sys.stdout
+            sys.stdout = buf
 
             org = {}
             for funcname in utilConf["builtinFuncs"]:
                 org[funcname] = __builtins__[funcname]
                 if utilConf["builtinFuncs"][funcname]:
-                    __builtins__[funcname] = locals()[utilConf["builtinFuncs"][funcname]]
+                    __builtins__[funcname] = locals(
+                    )[utilConf["builtinFuncs"][funcname]]
                 else:
                     __builtins__[funcname] = block(funcname+"()")
 
@@ -158,7 +161,7 @@ class Util(commands.Cog):
             for funcname in utilConf["builtinFuncs"]:
                 __builtins__[funcname] = org[funcname]
 
-            sys.stdout=bak_stdout
+            sys.stdout = bak_stdout
             stdout = buf.getvalue()
         else:
             error = "Unknown laun"
