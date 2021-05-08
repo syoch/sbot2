@@ -43,6 +43,7 @@ class Util(commands.Cog):
                     "input": None,
                     "exit": None,
                     "exec": None,
+                    "quit": None
                 },
                 "funcs": {
                     "sys": ["exit"],
