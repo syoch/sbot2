@@ -37,6 +37,7 @@ class Util(commands.Cog):
                     "range": "myRange",
                     "open": "myOpen",
                     "print": "myPrint",
+                    "iter": "myIter",
                     "globals": None,
                     "locals": None,
                     "input": None,
@@ -96,7 +97,11 @@ class Util(commands.Cog):
 
             def myPrint(*objects, sep=' ', end='\n', file=buf, flush=False):
                 nonlocal buf
-                org["print"](*objects,sep=sep,end=end,file=buf,flush=False)
+            def myIter(objects, sentinel=None):
+                if type(objects) == type(lambda: 0):
+                    if objects() != sentinel:
+                        raise Exception("iter attack has detected!")
+                return iter(objects, sentinel=sentinel)
 
             bak_stdout=sys.stdout
             sys.stdout=buf
