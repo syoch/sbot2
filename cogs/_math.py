@@ -17,7 +17,7 @@ class Math(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def graph(self, ctx, *args):
+    async def gravdivdaoijvadoijvadph(self, ctx, *args):
         s = -10
         e = 10
         # parse args
