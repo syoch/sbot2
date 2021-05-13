@@ -11,10 +11,11 @@ import matplotlib.pyplot as plt
 from util.f2l import f2l
 import state
 
+
 class Math(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.command()
     async def graph(self, ctx, *args):
         s = -10
@@ -51,13 +52,14 @@ class Math(commands.Cog):
         buf = io.BytesIO(b'')
         plt.savefig(buf)
         await ctx.send(f"<@!{ctx.author.id}>"+"`"+ff[0]+"`", file=discord.File(io.BytesIO(buf.getvalue()), filename="graph.png"))
-    
+
     @commands.command()
-    async def calc(self, ctx, *,formula):
+    async def cijigugeugewualc(self, ctx, *, formula):
         try:
-            await ctx.send( str(f2l(formula, symbols_="")[1]()) )
+            await ctx.send(str(f2l(formula, symbols_="")[1]()))
         except Exception as ex:
             await ctx.send(str(ex))
+
 
 def setup(bot):
     bot.add_cog(Math(bot))
