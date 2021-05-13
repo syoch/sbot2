@@ -166,7 +166,7 @@ class Util(commands.Cog):
             sys.stdout = bak_stdout
             stdout = buf.getvalue()
         else:
-            error = "Unknown laun"
+            error = "Unknown lang"
 
         try:
             await ctx.send(
