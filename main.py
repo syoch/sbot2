@@ -2,7 +2,10 @@ import logging
 import signal
 from discord.ext import commands
 import traceback
-import state
+import os
+import sys
+sys.path.append(os.getcwd()+"libs")
+
 
 logging.basicConfig(
     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -10,12 +13,14 @@ logging.basicConfig(
 logging.info("setup signal handler...")
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-INITIAL_EXTENSIONS=[
+INITIAL_EXTENSIONS = [
     "cogs.main",
     "cogs.admin",
     "cogs.util",
     "cogs._math",
 ]
+
+
 class MyBot(commands.Bot):
     def __init__(self, command_prefix):
         super().__init__(command_prefix)
@@ -29,8 +34,8 @@ class MyBot(commands.Bot):
     async def on_ready(self):
         logging.info("Login on "+self.user.name)
 
+
 if __name__ == "__main__":
     client = MyBot(command_prefix=('sb@'))
-    with open("token","r") as fp:
+    with open("token", "r") as fp:
         client.run(fp.read())
-    
