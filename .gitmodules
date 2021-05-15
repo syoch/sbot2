@@ -1,0 +1,3 @@
+[submodule "libs/eval"]
+	path = libs/eval
+	url = https://github.com/syoch/safeEvalpy
