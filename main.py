@@ -4,7 +4,7 @@ from discord.ext import commands
 import traceback
 import os
 import sys
-sys.path.append(os.getcwd()+"libs")
+sys.path.append(os.getcwd()+"/libs")
 
 
 logging.basicConfig(
