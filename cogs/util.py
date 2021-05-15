@@ -21,15 +21,26 @@ class Util(commands.Cog):
             ret = "Error:  Unknown language"
 
         try:
-            await ctx.send(
-                f"```{language}\n" +
-                f"lang  : {language}\n" +
-                f"source: {src}\n" +
-                f"errors: {error}\n" +
-                f"return: {ret}\n" +
-                f"output: {stdout}\n" +
-                "```"
-            )
+            content = ""
+            content += f"source"+"\n"
+            content += f"```{language}"+"\n"
+            content += f"{src}"+"\n"
+            content += f"```"+"\n"
+            content += f""+"\n"
+
+            if ret:
+                content += f"return value"+"\n"
+                content += f"```"+"\n"
+                content += f"{ret}"+"\n"
+                content += f"```"+"\n"
+
+            if stdout:
+                content += f"stdout"+"\n"
+                content += f"```"+"\n"
+                content += f"{stdout}"+"\n"
+                content += f"```"+"\n"
+
+            await ctx.send(content)
         except Exception as ex:
             await ctx.send("Exception has occured!\n" +
                            str(type(ex))+":"+str(ex))
