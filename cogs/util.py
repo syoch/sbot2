@@ -10,8 +10,8 @@ class Util(commands.Cog):
 
     @commands.command(name="eval")
     async def _eval(sender, ctx, *, aaa: str):
-        codeblock_start = aaa.index("```")
-        codeblock_end = aaa.rindex("```")+3
+        codeblock_start = aaa.index("```")+3
+        codeblock_end = aaa.rindex("```")
         codeblock = aaa[codeblock_start:codeblock_end]
         print("eval:", codeblock)
 
