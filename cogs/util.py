@@ -34,13 +34,6 @@ class Util(commands.Cog):
             await ctx.send("Exception has occured!\n" +
                            str(type(ex))+":"+str(ex))
 
-    async def check_cog(self, ctx):
-        if ctx.author.id == "524516049752686592":
-            return True
-        else:
-            ctx.send("This command is blocked( can use by syoch only )")
-            return False
-
 
 def setup(bot):
     bot.add_cog(Util(bot))
