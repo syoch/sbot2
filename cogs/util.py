@@ -10,24 +10,23 @@ class Util(commands.Cog):
 
     @commands.command(name="eval")
     async def _eval(sender, ctx, *, aaa: str):
+        if not state.state.enabledEval:
+            await ctx.send("eval is disabled")
+            return
+        # Get Codeblock
         codeblock_start = aaa.index("```")+3
         codeblock_end = aaa.rindex("```")
         codeblock = aaa[codeblock_start:codeblock_end]
+
         # Get language
         language_end = codeblock.index("\n")
         language = codeblock[0:language_end]
         codeblock = codeblock[language_end:]
-        print("eval:", language, "/", codeblock)
 
-    @commands.command(name="_eval")
-    async def __eval(sender, ctx, language: str, *, src):
-        if not state.state.enabledEval:
-            await ctx.send("eval is disabled")
-            return
         stdout = ""
         ret = None
         if language == "py":
-            (ret, stdout) = eval._eval(src)
+            (ret, stdout) = eval._eval(codeblock)
         else:
             ret = "Error:  Unknown language"
 
@@ -35,7 +34,7 @@ class Util(commands.Cog):
             content = ""
             content += f"source"+"\n"
             content += f"```{language}"+"\n"
-            content += f"{src}"+"\n"
+            content += f"{codeblock}"+"\n"
             content += f"```"+"\n"
             content += f""+"\n"
 
