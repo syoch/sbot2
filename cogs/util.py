@@ -13,7 +13,11 @@ class Util(commands.Cog):
         codeblock_start = aaa.index("```")+3
         codeblock_end = aaa.rindex("```")
         codeblock = aaa[codeblock_start:codeblock_end]
-        print("eval:", codeblock)
+        # Get language
+        language_end = codeblock.index("\n")
+        language = codeblock[0:language_end]
+        codeblock = codeblock[language_end:]
+        print("eval:", language, "/", codeblock)
 
     @commands.command(name="_eval")
     async def __eval(sender, ctx, language: str, *, src):
