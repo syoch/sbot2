@@ -1,12 +1,7 @@
 from discord.ext import commands
 import state
 
-import ast
-import re
-import io
-import sys
-import pathlib
-import typing
+import eval
 
 
 class Util(commands.Cog):
