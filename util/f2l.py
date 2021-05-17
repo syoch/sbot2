@@ -38,7 +38,4 @@ def f2l(formula_, symbols_=["x"]):
             if formula == oldf:
                 break
     formula = re.sub(rf"(\d)\(", rf"\1*(", formula)
-    return (formula, eval(
-        "lambda "+",".join(symbols)+" : "+formula,
-        numpy.__dict__, math.__dict__
-    ))
+    return formula
