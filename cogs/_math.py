@@ -56,9 +56,13 @@ class Math(commands.Cog):
         await ctx.send(f"<@!{ctx.author.id}>"+"`"+formula+"`", file=discord.File(io.BytesIO(buf.getvalue()), filename="graph.png"))
 
     @commands.command()
-    async def cijigugeugewualc(self, ctx, *, formula):
+    async def calc(self, ctx, *, formula):
         try:
-            await ctx.send(str(f2l(formula, symbols_="")[1]()))
+            funcs = math.__dict__
+            funcs.update(numpy.__dict__)
+            await ctx.send(str(
+                safeeval(f2l(formula), funcs)[0]
+            ))
         except Exception as ex:
             await ctx.send(str(ex))
 
