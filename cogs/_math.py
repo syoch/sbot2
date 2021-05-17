@@ -49,7 +49,12 @@ class Math(commands.Cog):
         funcs = math.__dict__
         funcs.update(numpy.__dict__)
         funcs.update(x=x)
-        plt.plot(x, safeeval(f2l(formula), funcs)[0])
+        y = safeeval(f2l(formula), funcs)[0]
+        if type(y) == str:  # blocked or syntax?
+            await ctx.send(y)
+            return
+
+        plt.plot(x, y)
 
         buf = io.BytesIO(b'')
         plt.savefig(buf)
