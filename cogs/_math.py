@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 from util.f2l import f2l
 import state
+from libs.eval import _eval as safeeval
 
 
 class Math(commands.Cog):
