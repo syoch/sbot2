@@ -51,7 +51,7 @@ class Math(commands.Cog):
         funcs.update(x=x)
         y = safeeval(f2l(formula), funcs)[0]
         if type(y) == str:  # blocked or syntax?
-            await ctx.send(y)
+            await ctx.send(str(y))
             return
 
         plt.plot(x, y)
