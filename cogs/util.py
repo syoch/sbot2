@@ -42,8 +42,9 @@ class Util(commands.Cog):
             if ret:
                 content += f"return value"+"\n"
                 content += f"```"+"\n"
-                if len(ret) >= 3000:
-                    content += f"long object({len(ret)})"+"\n"
+                ret_len = len(str(ret))
+                if ret_len >= 3000:
+                    content += f"long object({ret_len})"+"\n"
                 else:
                     content += f"{ret}"+"\n"
                 content += f"```"+"\n"
