@@ -25,12 +25,13 @@ class Util(commands.Cog):
 
         stdout = ""
         ret = None
-        if language == "py":
-            (ret, stdout) = eval._eval(codeblock)
-        else:
-            ret = "Error:  Unknown language"
-
         try:
+            if language == "py":
+                (ret, stdout) = eval._eval(codeblock)
+            else:
+                ret = "Error:  Unknown language"
+
+            # Create Content
             content = ""
             content += f"source"+"\n"
             content += f"```{language}"+"\n"
@@ -41,7 +42,10 @@ class Util(commands.Cog):
             if ret:
                 content += f"return value"+"\n"
                 content += f"```"+"\n"
-                content += f"{ret}"+"\n"
+                if len(ret) >= 3000:
+                    content += f"long object({len(ret)})"+"\n"
+                else:
+                    content += f"{ret}"+"\n"
                 content += f"```"+"\n"
 
             if stdout:
