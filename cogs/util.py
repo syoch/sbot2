@@ -43,7 +43,7 @@ class Util(commands.Cog):
                 content += f"return value"+"\n"
                 content += f"```"+"\n"
                 ret_len = len(str(ret))
-                if ret_len >= 3000:
+                if ret_len >= 1500:
                     content += f"long object({ret_len})"+"\n"
                 else:
                     content += f"{ret}"+"\n"
