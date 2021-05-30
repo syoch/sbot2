@@ -57,8 +57,13 @@ class Util(commands.Cog):
 
             await ctx.send(content)
         except Exception as ex:
+            import traceback
+            import sys
+            tpe, v, tb = sys.exc_info()
             await ctx.send("Exception has occured!\n" +
-                           str(type(ex))+":"+str(ex))
+                           "```\n" +
+                           "\n".join(traceback.format_tb(tb)) +
+                           "```")
 
 
 def setup(bot):
