@@ -1,6 +1,6 @@
 [submodule "libs/eval"]
 	path = libs/eval
 	url = https://github.com/syoch/safeEvalpy
-[submodule "libs/expr-conv"]
-	path = libs/expr-conv
+[submodule "libs/expr_conv"]
+	path = libs/expr_conv
 	url = https://github.com/syoch/expr-conv
