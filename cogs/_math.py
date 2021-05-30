@@ -8,7 +8,7 @@ import math
 import numpy
 import matplotlib.pyplot as plt
 
-from util.f2l import f2l
+from libs.expr_conv import f2l as converter
 import state
 from libs.eval import _eval as safeeval
 
@@ -49,7 +49,7 @@ class Math(commands.Cog):
         funcs = math.__dict__
         funcs.update(numpy.__dict__)
         funcs.update(x=x)
-        y = safeeval(f2l(formula), funcs)[0]
+        y = safeeval(converter(formula), funcs)[0]
         if type(y) == str:  # blocked or syntax?
             await ctx.send(str(y))
             return
@@ -66,7 +66,7 @@ class Math(commands.Cog):
             funcs = math.__dict__
             funcs.update(numpy.__dict__)
             await ctx.send(str(
-                safeeval(f2l(formula), funcs)[0]
+                safeeval(converter(formula), funcs)[0]
             ))
         except Exception as ex:
             await ctx.send(str(ex))
