@@ -1,7 +1,7 @@
 from discord.ext import commands
 import state
 
-import eval as safeeval
+from libs.eval import _eval as safeeval
 
 
 class Util(commands.Cog):
