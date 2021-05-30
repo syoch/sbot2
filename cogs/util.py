@@ -27,7 +27,7 @@ class Util(commands.Cog):
         ret = None
         try:
             if language == "py":
-                (ret, stdout) = safeeval._eval(codeblock)
+                (ret, stdout) = safeeval(codeblock)
             else:
                 ret = "Error:  Unknown language"
 
@@ -58,11 +58,9 @@ class Util(commands.Cog):
             await ctx.send(content)
         except Exception as ex:
             import traceback
-            import sys
-            tpe, v, tb = sys.exc_info()
             await ctx.send("Exception has occured!\n" +
                            "```\n" +
-                           "\n".join(traceback.format_tb(tb)) +
+                           ''.join(traceback.TracebackException.from_exception(ex).format()) +
                            "```")
 
 
