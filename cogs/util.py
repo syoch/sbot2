@@ -1,7 +1,7 @@
 from discord.ext import commands
 import state
 
-import eval
+import eval as safeeval
 
 
 class Util(commands.Cog):
@@ -27,7 +27,7 @@ class Util(commands.Cog):
         ret = None
         try:
             if language == "py":
-                (ret, stdout) = eval._eval(codeblock)
+                (ret, stdout) = safeeval._eval(codeblock)
             else:
                 ret = "Error:  Unknown language"
 
