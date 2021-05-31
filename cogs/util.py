@@ -9,20 +9,10 @@ class Util(commands.Cog):
         self.bot = bot
 
     @commands.command(name="eval")
-    async def _eval(sender, ctx, *, aaa: str):
+    async def _eval(sender, ctx, language, *, codeblock: str):
         if not state.state.enabledEval:
             await ctx.send("eval is disabled")
             return
-        # Get Codeblock
-        codeblock_start = aaa.index("```")+3
-        codeblock_end = aaa.rindex("```")
-        codeblock = aaa[codeblock_start:codeblock_end]
-
-        # Get language
-        language_end = codeblock.index("\n")
-        language = codeblock[0:language_end]
-        codeblock = codeblock[language_end:]
-
         stdout = ""
         ret = None
         try:
