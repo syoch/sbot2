@@ -38,7 +38,7 @@ class Util(commands.Cog):
                 if ret_len >= 1500:
                     content += f"long object({ret_len})"+"\n"
                 else:
-                    tmp = ret.replace("```", "'''")
+                    tmp = str(ret).replace("```", "'''")
                     content += f"{tmp}"+"\n"
                 content += f"```"+"\n"
             if stdout:
@@ -48,7 +48,7 @@ class Util(commands.Cog):
                 if stdout_len >= 1500:
                     content += f"long object({stdout_len})"+"\n"
                 else:
-                    tmp = stdout.replace("```", "'''")
+                    tmp = str(stdout).replace("```", "'''")
                     content += f"{tmp}"+"\n"
                 content += f"```"+"\n"
 
