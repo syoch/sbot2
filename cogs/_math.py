@@ -58,7 +58,7 @@ class Math(commands.Cog):
 
         buf = io.BytesIO(b'')
         plt.savefig(buf)
-        await ctx.send(f"<@!{ctx.author.id}>"+"`"+formula+"`", file=discord.File(io.BytesIO(buf.getvalue()), filename="graph.png"))
+        await ctx.send(f"<@!{ctx.author.id}>", file=discord.File(io.BytesIO(buf.getvalue()), filename="graph.png"))
 
     @commands.command()
     async def calc(self, ctx, *, formula):
