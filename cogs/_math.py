@@ -65,9 +65,12 @@ class Math(commands.Cog):
         try:
             funcs = math.__dict__
             funcs.update(numpy.__dict__)
-            await ctx.send(str(
-                safeeval(converter(formula), funcs)[0]
-            ))
+            await ctx.send(
+                "`" +
+                str(safeeval(converter(formula), funcs)
+                    [0]).replace("`", "'") +
+                "`"
+            )
         except Exception as ex:
             await ctx.send(str(ex))
 
