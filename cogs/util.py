@@ -22,10 +22,12 @@ class Util(commands.Cog):
                 ret = "Error:  Unknown language"
 
             # Create Content
+            code = codeblock.replace("```", "'''")
+
             content = ""
             content += f"source"+"\n"
             content += f"```{language}"+"\n"
-            content += f"{codeblock}"+"\n"
+            content += f"{code}"+"\n"
             content += f"```"+"\n"
             content += f""+"\n"
 
@@ -36,13 +38,15 @@ class Util(commands.Cog):
                 if ret_len >= 1500:
                     content += f"long object({ret_len})"+"\n"
                 else:
-                    content += f"{ret}"+"\n"
+                    tmp = ret.replace("```", "'''")
+                    content += f"{tmp}"+"\n"
                 content += f"```"+"\n"
 
             if stdout:
                 content += f"stdout"+"\n"
                 content += f"```"+"\n"
-                content += f"{stdout}"+"\n"
+                tmp = stdout.replace("```", "'''")
+                content += f"{tmp}"+"\n"
                 content += f"```"+"\n"
 
             await ctx.send(content)
