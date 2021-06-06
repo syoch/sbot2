@@ -41,12 +41,15 @@ class Util(commands.Cog):
                     tmp = ret.replace("```", "'''")
                     content += f"{tmp}"+"\n"
                 content += f"```"+"\n"
-
             if stdout:
                 content += f"stdout"+"\n"
                 content += f"```"+"\n"
-                tmp = stdout.replace("```", "'''")
-                content += f"{tmp}"+"\n"
+                stdout_len = len(str(stdout))
+                if stdout_len >= 1500:
+                    content += f"long object({stdout_len})"+"\n"
+                else:
+                    tmp = stdout.replace("```", "'''")
+                    content += f"{tmp}"+"\n"
                 content += f"```"+"\n"
 
             await ctx.send(content)
