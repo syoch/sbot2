@@ -1,1 +1,1 @@
-discordbot: python main.py
+discordbot: ./run.sh
