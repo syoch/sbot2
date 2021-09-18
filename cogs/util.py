@@ -52,10 +52,10 @@ class Util(commands.Cog):
                     content += f"{tmp}"+"\n"
                 content += f"```"+"\n"
 
-            await ctx.send(content)
+            await ctx.reply(content)
         except Exception as ex:
             import traceback
-            await ctx.send("Exception has occured!\n" +
+            await ctx.reply("Exception has occured!\n" +
                            "```\n" +
                            ''.join(traceback.TracebackException.from_exception(ex).format()) +
                            "```")
