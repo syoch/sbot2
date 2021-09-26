@@ -19,7 +19,10 @@ class Util(commands.Cog):
                 "Available targets:",
                 "```",
                 "",
-                *sorted(sorter.table.keys()),
+                *sorted([
+                    f"{avail_target} ({sorter.table[avail_target][0]})"
+                    for avail_target in sorter.table.keys()
+                ]),
                 "```",
             ]
             return await ctx.send("\n".join(lines))
