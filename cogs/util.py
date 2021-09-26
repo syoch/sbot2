@@ -2,11 +2,32 @@ from discord.ext import commands
 import state
 
 from libs.eval import _eval as safeeval
+from libs.sorter.header import sort as header_sort
+import re
 
 
 class Util(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(name="sort")
+    async def sort(self, ctx, target, *, codeblock: str):
+        block = codeblock
+        block = block[block.find("```"):]
+        match = re.match(r"```[^\n]*?\n([^(```)]*)\n```", block)
+
+        if not match:
+            return await ctx.send("Invalid codeblock.")
+        block = match.group(1)
+
+        if target == "header" or target == "include":
+            result = header_sort(codeblock)
+            language = "cpp"
+        else:
+            result = "Unknown target: {}".format(target)
+            language = "text"
+
+        await ctx.send(f"```{language}\n" + result + "\n```")
 
     @commands.command(name="eval")
     async def _eval(sender, ctx, language, *, codeblock: str):
@@ -56,9 +77,9 @@ class Util(commands.Cog):
         except Exception as ex:
             import traceback
             await ctx.reply("Exception has occured!\n" +
-                           "```\n" +
-                           ''.join(traceback.TracebackException.from_exception(ex).format()) +
-                           "```")
+                            "```\n" +
+                            ''.join(traceback.TracebackException.from_exception(ex).format()) +
+                            "```")
 
 
 def setup(bot):
