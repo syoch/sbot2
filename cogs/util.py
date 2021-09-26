@@ -2,7 +2,7 @@ from discord.ext import commands
 import state
 
 from libs.eval import _eval as safeeval
-from libs.sorter.header import sort as header_sort
+import libs.sorter as sorter
 import re
 
 
@@ -12,22 +12,36 @@ class Util(commands.Cog):
 
     @commands.command(name="sort")
     async def sort(self, ctx, target, *, codeblock: str):
+        if target not in sorter.table:
+            lines = [
+                "Unknown target: {}".format(target),
+                "",
+                "Available targets:",
+                "```",
+                "",
+                *sorted(sorter.table.keys()),
+                "```",
+            ]
+            return await ctx.send("\n".join(lines))
+
+        # Get raw code block
         block = codeblock
         block = block[block.find("```"):]
         match = re.match(r"```[^\n]*?\n([^(```)]*)\n```", block)
 
         if not match:
             return await ctx.send("Invalid codeblock.")
+
         block = match.group(1)
 
-        if target == "header" or target == "include":
-            result = header_sort(codeblock)
-            language = "cpp"
-        else:
-            result = "Unknown target: {}".format(target)
-            language = "text"
+        # Sort
+        (language, func) = sorter.table[target]
 
-        await ctx.send(f"```{language}\n" + result + "\n```")
+        await ctx.send("\n".join(
+            f"```{language}",
+            func(block),
+            "```"
+        ))
 
     @commands.command(name="eval")
     async def _eval(sender, ctx, language, *, codeblock: str):
