@@ -40,11 +40,11 @@ class Util(commands.Cog):
         # Sort
         (language, func) = sorter.table[target]
 
-        await ctx.send("\n".join(
+        await ctx.send("\n".join([
             f"```{language}",
             func(block),
             "```"
-        ))
+        ]))
 
     @commands.command(name="eval")
     async def _eval(sender, ctx, language, *, codeblock: str):
