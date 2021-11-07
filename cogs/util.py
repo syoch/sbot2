@@ -39,7 +39,7 @@ class Util(commands.Cog):
                 "```",
                 "",
                 *sorted([
-                    f"{avail_target} ({sorter.table[avail_target][0]})"
+                    f"{avail_target}"
                     for avail_target in sorter.table.keys()
                 ]),
                 "```",
