@@ -24,6 +24,8 @@ class Util(commands.Cog):
                     for avail_target in sorter.table.keys()
                 ]),
                 "```",
+                "",
+                "if target isn't specified, SBot2 will use 'normal' sort"
             ]
             return await ctx.send("\n".join(lines))
 
