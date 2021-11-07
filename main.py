@@ -4,8 +4,9 @@ from discord.ext import commands
 import traceback
 import os
 import sys
-sys.path.append(os.getcwd()+"/libs")
+import dotenv
 
+sys.path.append(os.getcwd()+"/libs")
 
 logging.basicConfig(
     format='%(asctime)s : %(levelname)s : %(message)s', level=logging.INFO)
@@ -36,6 +37,10 @@ class MyBot(commands.Bot):
 
 
 if __name__ == "__main__":
-    client = MyBot(command_prefix=('sb@'))
-    with open("token", "r") as fp:
-        client.run(fp.read())
+    dotenv.load_dotenv(verbose=True)
+
+    prefix = "sb:t@" if os.getenv("DISCORD_BOT_MODE") == "test" else "sb@"
+
+    client = MyBot(command_prefix=prefix)
+
+    client.run(os.getenv("DISCORD_TOKEN"))
