@@ -37,10 +37,12 @@ class MyBot(commands.Bot):
 
 
 if __name__ == "__main__":
-    dotenv.load_dotenv(verbose=True)
+    environ = dotenv.dotenv_values()
 
-    prefix = "sb:t@" if os.getenv("DISCORD_BOT_MODE") == "test" else "sb@"
+    MODE = environ["DISCORD_BOT_MODE"]
+    TOKEN = environ["DISCORD_TOKEN"]
 
+    prefix = "sb:t@" if MODE == "test" else "sb@"
     client = MyBot(command_prefix=prefix)
 
-    client.run(os.getenv("DISCORD_TOKEN"))
+    client.run(TOKEN)
