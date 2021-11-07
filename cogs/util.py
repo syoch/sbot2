@@ -23,7 +23,7 @@ class Util(commands.Cog):
         code = match.group(2)
 
         if target == "":
-            target = "normal"
+            target = "plain"
 
         if target not in sorter.table:
             lines = [
@@ -49,10 +49,10 @@ class Util(commands.Cog):
             return await ctx.send("\n".join(lines))
 
         # Sort
-        (language, func) = sorter.table[code]
+        func = sorter.table[target]
 
         await ctx.send("\n".join([
-            f"```{language}",
+            f"```{target}",
             func(code),
             "```"
         ]))
