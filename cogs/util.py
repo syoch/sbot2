@@ -44,7 +44,7 @@ class Util(commands.Cog):
                 ]),
                 "```",
                 "",
-                "if target isn't specified, SBot2 will use 'normal' sort"
+                "if target isn't specified, SBot2 will use 'plain' sort"
             ]
             return await ctx.send("\n".join(lines))
 
