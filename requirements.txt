@@ -2,3 +2,4 @@ discord.py
 matplotlib
 numpy
 timeout-decorator
+python-dotenv
