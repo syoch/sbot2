@@ -12,10 +12,28 @@ class Util(commands.Cog):
 
     @commands.command(name="sort")
     # TODO(syoch): impl auto mode
-    async def sort(self, ctx, target: str = "normal", *, codeblock: str):
+    async def sort(self, ctx, *, codeblock: str):
+        match = re.match(r"```([^\n]*)?\n([^(```)]*)```", codeblock)
+
+        if match is None:
+            await ctx.send("Invalid codeblock")
+            return
+
+        target = match.group(1)
+        code = match.group(2)
+
+        if target == "":
+            target = "normal"
+
         if target not in sorter.table:
             lines = [
                 "Unknown target: {}".format(target),
+                "",
+                "Usage:",
+                "  sb@sort",
+                "  ```<target>",
+                "  code...",
+                "  ```",
                 "",
                 "Available targets:",
                 "```",
@@ -30,22 +48,12 @@ class Util(commands.Cog):
             ]
             return await ctx.send("\n".join(lines))
 
-        # Get raw code block
-        block = codeblock
-        block = block[block.find("```"):]
-        match = re.match(r"```[^\n]*?\n([^(```)]*)\n```", block)
-
-        if not match:
-            return await ctx.send("Invalid codeblock.")
-
-        block = match.group(1)
-
         # Sort
-        (language, func) = sorter.table[target]
+        (language, func) = sorter.table[code]
 
         await ctx.send("\n".join([
             f"```{language}",
-            func(block),
+            func(code),
             "```"
         ]))
 
