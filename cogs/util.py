@@ -11,7 +11,8 @@ class Util(commands.Cog):
         self.bot = bot
 
     @commands.command(name="sort")
-    async def sort(self, ctx, target, *, codeblock: str):
+    # TODO(syoch): impl auto mode
+    async def sort(self, ctx, target: str = "normal", *, codeblock: str):
         if target not in sorter.table:
             lines = [
                 "Unknown target: {}".format(target),
