@@ -76,13 +76,13 @@ class Math(commands.Cog):
             await ctx.send(str(ex))
 
     @commands.command()
-    async def calc_sym(self, ctx, *, formula):
+    async def eval_sym(self, ctx, *, formula):
         try:
             funcs = math.__dict__
             funcs.update(sympy.__dict__)
             await ctx.reply(
                 "`" +
-                str(safeeval(converter(formula), funcs)
+                str(safeeval(formula, funcs)
                     [0]).replace("`", "'") +
                 "`"
             )
