@@ -6,6 +6,7 @@ import io
 import math
 
 import numpy
+import sympy
 import matplotlib.pyplot as plt
 
 from libs.expr_conv import f2l as converter
@@ -65,6 +66,20 @@ class Math(commands.Cog):
         try:
             funcs = math.__dict__
             funcs.update(numpy.__dict__)
+            await ctx.reply(
+                "`" +
+                str(safeeval(converter(formula), funcs)
+                    [0]).replace("`", "'") +
+                "`"
+            )
+        except Exception as ex:
+            await ctx.send(str(ex))
+
+    @commands.command()
+    async def calc_sym(self, ctx, *, formula):
+        try:
+            funcs = math.__dict__
+            funcs.update(sympy.__dict__)
             await ctx.reply(
                 "`" +
                 str(safeeval(converter(formula), funcs)
