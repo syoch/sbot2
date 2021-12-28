@@ -109,6 +109,16 @@ class Util(commands.Cog):
                             ''.join(traceback.TracebackException.from_exception(ex).format()) +
                             "```")
 
+    @commands.command()
+    async def fulleval(self, ctx, *, code):
+        if ctx.author.id != 524516049752686592:
+            await ctx.send("You are not allowed to use this command")
+
+        try:
+            await ctx.send(eval(code))
+        except Exception as ex:
+            await ctx.send(str(ex))
+
 
 def setup(bot):
     bot.add_cog(Util(bot))

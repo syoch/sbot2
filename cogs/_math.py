@@ -76,20 +76,6 @@ class Math(commands.Cog):
         except Exception as ex:
             await ctx.send(str(ex))
 
-    @commands.command()
-    async def eval_sym(self, ctx, *, formula):
-        try:
-            funcs = math.__dict__
-            funcs.update(sympy.__dict__)
-            await ctx.reply(
-                "`" +
-                str(safeeval(formula, funcs)
-                    [0]).replace("`", "'") +
-                "`"
-            )
-        except Exception as ex:
-            await ctx.send(str(ex))
-
 
 def setup(bot):
     bot.add_cog(Math(bot))
