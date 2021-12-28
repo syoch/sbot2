@@ -113,6 +113,7 @@ class Util(commands.Cog):
     async def fulleval(self, ctx, *, code):
         if ctx.author.id != 524516049752686592:
             await ctx.send("You are not allowed to use this command")
+            return
 
         try:
             await ctx.send(eval(code))
