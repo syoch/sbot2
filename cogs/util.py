@@ -121,7 +121,7 @@ class Util(commands.Cog):
             await ctx.send(str(ex))
 
     @commands.command()
-    async def invite(self):
+    async def invite(self, ctx):
         await ctx.send("A invite link!\nhttps://discord.com/api/oauth2/authorize?client_id=649949366785802260&permissions=8&scope=bot")
 
 
