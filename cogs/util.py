@@ -120,6 +120,10 @@ class Util(commands.Cog):
         except Exception as ex:
             await ctx.send(str(ex))
 
+    @commands.command()
+    async def invite(self):
+        await ctx.send("A invite link!\nhttps://discord.com/api/oauth2/authorize?client_id=649949366785802260&permissions=8&scope=bot")
+
 
 def setup(bot):
     bot.add_cog(Util(bot))
