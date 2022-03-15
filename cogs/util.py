@@ -124,6 +124,14 @@ class Util(commands.Cog):
     async def invite(self, ctx):
         await ctx.send("A invite link!\nhttps://discord.com/api/oauth2/authorize?client_id=649949366785802260&permissions=8&scope=bot")
 
+    @commands.command()
+    async def goukakuritu(self, ctx, goukaku: int, fugoukaku: int):
+        """
+        合格回数, 不合格率 を引数として合格率を算出するコマンドです
+        """
+
+        await ctx.send(str(goukaku/(goukaku+fugoukaku)) + "% です 頑張ってください")
+
 
 def setup(bot):
     bot.add_cog(Util(bot))
