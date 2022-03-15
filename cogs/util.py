@@ -135,10 +135,18 @@ class Util(commands.Cog):
             await ctx.send("引数が不正です")
             return
 
-        try:
-            (ok, ng) = map(int, match.groups())
-        except ValueError:
-            await ctx.send("引数が不正です(値が数字ではありません)")
+        ok = match.group(1)
+        ng = match.group(2)
+
+        (ok, _) = safeeval(ok)
+        (ng, _) = safeeval(ng)
+
+        if not (type(ok) is int or type(ok) is float):
+            await ctx.send(f"合格回数の値が不正です ({type(ok)} 型です)")
+            return
+
+        if not (type(ng) is int or type(ng) is float):
+            await ctx.send(f"不合格回数の値が不正です ({type(ng)} 型です)")
             return
 
         if ok + ng == 0:
