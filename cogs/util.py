@@ -130,7 +130,7 @@ class Util(commands.Cog):
         合格回数, 不合格率 を引数として合格率を算出するコマンドです
         """
 
-        await ctx.send(str(goukaku/(goukaku+fugoukaku)) + "% です 頑張ってください")
+        await ctx.send(str(100 * goukaku/(goukaku+fugoukaku)) + "% です 頑張ってください")
 
 
 def setup(bot):
