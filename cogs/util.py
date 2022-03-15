@@ -125,12 +125,27 @@ class Util(commands.Cog):
         await ctx.send("A invite link!\nhttps://discord.com/api/oauth2/authorize?client_id=649949366785802260&permissions=8&scope=bot")
 
     @commands.command()
-    async def goukakuritu(self, ctx, goukaku: int, fugoukaku: int):
+    async def goukakuritu(self, ctx, *, argument):
         """
         合格回数, 不合格率 を引数として合格率を算出するコマンドです
         """
 
-        await ctx.send(str(100 * goukaku/(goukaku+fugoukaku)) + "% です 頑張ってください")
+        match = re.match(r"^(.*[\d)]) +([(\d].*)$", argument)
+        if match is None:
+            await ctx.send("引数が不正です")
+            return
+
+        try:
+            (ok, ng) = map(int, match.groups())
+        except ValueError:
+            await ctx.send("引数が不正です(値が数字ではありません)")
+            return
+
+        if ok + ng == 0:
+            await ctx.send("引数が不正です(合格回数と不合格回数の和が0です)")
+            return
+
+        await ctx.send(f"{100 * ok / (ok + ng)}% です 頑張ってください")
 
 
 def setup(bot):
