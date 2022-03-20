@@ -1,4 +1,11 @@
 {
+    "saveAndRun": {
+        "commands": [
+            {
+                "cmd": "scripts/test.sh"
+            }
+        ]
+    },
     "files.exclude": {
         "**/__pycache__": true,
         ".env": true
