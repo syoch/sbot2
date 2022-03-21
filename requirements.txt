@@ -1,4 +1,4 @@
-pycord==1.7.3
+py-cord==1.7.3
 matplotlib==3.5.1
 numpy==1.22.3
 timeout-decorator==0.5.0
