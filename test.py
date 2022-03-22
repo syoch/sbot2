@@ -1,10 +1,10 @@
-from libs import eval
+from libs.eval import safeeval
 import os
 import socket
 
 
 def test(x):
-    ret, out = eval._eval(x)
+    ret, out = safeeval._eval(x)
     print(ret)
     print("-----")
     print(out)

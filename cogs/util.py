@@ -1,7 +1,7 @@
 from discord.ext import commands
 import state
 
-from libs.eval import _eval as safeeval
+from libs.eval.safeeval import _eval as safeeval
 import libs.sorter as sorter
 import re
 

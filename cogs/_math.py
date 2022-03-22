@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 from libs.expr_conv import f2l as converter
 import state
-from libs.eval import _eval as safeeval
+from libs.eval.safeeval import _eval as safeeval
 
 
 class Math(commands.Cog):
