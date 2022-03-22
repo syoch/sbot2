@@ -10,5 +10,5 @@ def test(x):
     print(out)
 
 
-test('__import__("math")')
+test('__import__("subprocess")')
 test('__import__("math")')
