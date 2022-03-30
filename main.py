@@ -42,7 +42,7 @@ if __name__ == "__main__":
     MODE = environ["DISCORD_BOT_MODE"]
     TOKEN = environ["DISCORD_TOKEN"]
 
-    prefix = "sb:t@" if MODE == "test" else "sb@"
+    prefix = "sb:t." if MODE == "test" else "sb."
     client = MyBot(command_prefix=prefix)
 
     client.run(TOKEN)
