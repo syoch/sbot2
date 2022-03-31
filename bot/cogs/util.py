@@ -1,5 +1,5 @@
 from discord.ext import commands
-import state
+from .. import state
 
 from libs.eval.safeeval import _eval as safeeval
 import libs.sorter as sorter
@@ -108,17 +108,6 @@ class Util(commands.Cog):
                             "```\n" +
                             ''.join(traceback.TracebackException.from_exception(ex).format()) +
                             "```")
-
-    @commands.command()
-    async def fulleval(self, ctx, *, code):
-        if ctx.author.id != 524516049752686592:
-            await ctx.send("You are not permitted to use this command")
-            return
-
-        try:
-            await ctx.send(eval(code))
-        except Exception as ex:
-            await ctx.send(str(ex))
 
     @commands.command()
     async def invite(self, ctx):

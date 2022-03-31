@@ -6,12 +6,9 @@ import io
 import math
 
 import numpy
-import sympy
-import sympy.tensor
 import matplotlib.pyplot as plt
 
 from libs.expr_conv import f2l as converter
-import state
 from libs.eval.safeeval import _eval as safeeval
 
 

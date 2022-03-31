@@ -2,7 +2,7 @@
     "saveAndRun": {
         "commands": [
             {
-                "cmd": "scripts/test.sh"
+                "cmd": "scripts/run.sh"
             }
         ]
     },
