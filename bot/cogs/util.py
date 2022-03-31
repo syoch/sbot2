@@ -67,7 +67,7 @@ class Util(commands.Cog):
             await ctx.send("eval is disabled")
             return
         try:
-            (ret, stdout) = safeeval._eval_as_str(codeblock)
+            (ret, stdout) = safeeval._eval(codeblock)
         except Exception as ex:
             import traceback
             await ctx.reply("Exception has occured!\n" +

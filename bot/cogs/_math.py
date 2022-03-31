@@ -48,7 +48,8 @@ class Math(commands.Cog):
         funcs = math.__dict__
         funcs.update(numpy.__dict__)
         funcs.update(x=x)
-        y = safeeval._eval(converter(formula), funcs)[0]
+        y = safeeval._eval(converter(formula),
+                           as_str=False, __globals=funcs)[0]
         if type(y) == str:  # blocked or syntax?
             await ctx.reply(str(y))
             return
@@ -66,7 +67,7 @@ class Math(commands.Cog):
             funcs.update(numpy.__dict__)
             await ctx.reply(
                 "`" +
-                str(safeeval._eval_as_str(converter(formula), funcs)
+                str(safeeval._eval(converter(formula), __globals=funcs)
                     [0]).replace("`", "'") +
                 "`"
             )
