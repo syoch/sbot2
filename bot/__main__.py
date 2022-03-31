@@ -50,15 +50,15 @@ class MyBot(commands.Bot):
 
         if isinstance(exception, commands.MissingRequiredArgument):
             await context.send(
-                f"`{context.command.name}` requires `{exception.param.name}`")
+                f"Error: `{context.command.name}` requires `{exception.param.name}`")
             return
 
         if isinstance(exception, commands.CommandOnCooldown):
             await context.send(
-                f"`{context.command.name}` is on cooldown. Try again in `{exception.retry_after}` seconds.")
+                f"Error: `{context.command.name}` is on cooldown. Try again in `{exception.retry_after}` seconds.")
             return
 
-        await context.send(f"```{exception}```")
+        await context.send(f"Error: ```{exception}```")
 
 
 if __name__ == "__main__":
