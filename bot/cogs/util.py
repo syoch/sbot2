@@ -1,7 +1,7 @@
 from discord.ext import commands
 from .. import state
 
-from libs.eval.safeeval import _eval as safeeval
+from libs.eval import safeeval
 import libs.sorter as sorter
 import re
 
@@ -66,49 +66,58 @@ class Util(commands.Cog):
         if not state.eval_enabled:
             await ctx.send("eval is disabled")
             return
-        stdout = ""
-        ret = None
         try:
-            (ret, stdout) = safeeval(codeblock)
-
-            # Create Content
-            code = codeblock.replace("```", "'''")
-
-            content = ""
-            content += f"source"+"\n"
-            content += f"```{language}"+"\n"
-            content += f"{code}"+"\n"
-            content += f"```"+"\n"
-            content += f""+"\n"
-
-            if ret:
-                content += f"return value"+"\n"
-                content += f"```"+"\n"
-                ret_len = len(str(ret))
-                if ret_len >= 1500:
-                    content += f"long object({ret_len})"+"\n"
-                else:
-                    tmp = str(ret).replace("```", "'''")
-                    content += f"{tmp}"+"\n"
-                content += f"```"+"\n"
-            if stdout:
-                content += f"stdout"+"\n"
-                content += f"```"+"\n"
-                stdout_len = len(str(stdout))
-                if stdout_len >= 1500:
-                    content += f"long object({stdout_len})"+"\n"
-                else:
-                    tmp = str(stdout).replace("```", "'''")
-                    content += f"{tmp}"+"\n"
-                content += f"```"+"\n"
-
-            await ctx.reply(content)
+            (ret, stdout) = safeeval._eval(codeblock)
+            with safeeval.patcher:
+                ret = str(ret)
         except Exception as ex:
             import traceback
             await ctx.reply("Exception has occured!\n" +
                             "```\n" +
                             ''.join(traceback.TracebackException.from_exception(ex).format()) +
                             "```")
+            return
+
+        # Create Content
+        code = codeblock.replace("```", "'''")
+
+        ret_len = len(ret)
+        if ret_len >= 1500:
+            ret = f"long object({ret_len})"
+        ret = ret.replace("```", "'''")
+
+        stdout_len = len(stdout)
+        if stdout_len >= 1500:
+            stdout = f"long object({stdout_len})"
+        stdout = stdout.replace("```", "'''")
+
+        lines = []
+
+        lines.extend([
+            "sources",
+            "```py",
+            code,
+            "```",
+            ""
+        ])
+
+        if ret:
+            lines.extend([
+                "return value",
+                "```",
+                ret,
+                "```"
+            ])
+
+        if stdout:
+            lines.extend([
+                "standard output",
+                "```",
+                stdout,
+                "```"
+            ])
+
+        await ctx.reply("\n".join(lines))
 
     @commands.command()
     async def invite(self, ctx):
