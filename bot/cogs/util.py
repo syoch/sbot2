@@ -58,17 +58,18 @@ class Util(commands.Cog):
         ]))
 
     @commands.command(name="eval")
-    async def _eval(sender, ctx, language, *, codeblock: str):
+    async def _eval(sender, ctx, *, codeblock: str):
+        """
+        Evalute python expression in safeeval
+        """
+
         if not state.eval_enabled:
             await ctx.send("eval is disabled")
             return
         stdout = ""
         ret = None
         try:
-            if language == "py":
-                (ret, stdout) = safeeval(codeblock)
-            else:
-                ret = "Error:  Unknown language"
+            (ret, stdout) = safeeval(codeblock)
 
             # Create Content
             code = codeblock.replace("```", "'''")
