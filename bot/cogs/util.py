@@ -59,7 +59,7 @@ class Util(commands.Cog):
 
     @commands.command(name="eval")
     async def _eval(sender, ctx, language, *, codeblock: str):
-        if not state.state.enabledEval:
+        if not state.eval_enabled:
             await ctx.send("eval is disabled")
             return
         stdout = ""

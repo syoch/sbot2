@@ -11,8 +11,8 @@ class Admin(commands.Cog):
 
     @commands.command()
     async def switch_eval(self, ctx):
-        state.state.enabledEval ^= 1
-        await ctx.send(f"state.enabledEval = {state.state.enabledEval}")
+        state.eval_enabled ^= 1
+        await ctx.send(f"state.enabledEval = {state.eval_enabled}")
 
     def reload(self, name):
         try:
