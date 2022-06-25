@@ -23,6 +23,7 @@ class Math(commands.Cog):
         # parse args
         _formula = []
         flag = "n"  # s:check start e:check end n:none
+
         for arg in args:
             if flag == "s":
                 s = float(arg)
@@ -37,20 +38,25 @@ class Math(commands.Cog):
             else:
                 _formula.append(arg)
         formula = "".join(_formula)
+
         # process
-        x = numpy.linspace(s, e, math.ceil(1000*(e-s)))
-        # mpl
+        x = numpy.linspace(s, e,  math.ceil(1000*(e-s)))
+
+        # matplot lib
         plt.figure()
         plt.title("f(x)="+formula)
         plt.xlabel("x")
         plt.ylabel("y")
 
-        funcs = math.__dict__
-        funcs.update(numpy.__dict__)
-        funcs.update(x=x)
-        y = safeeval._eval(converter(formula),
-                           as_str=False, __globals=funcs)[0]
-        if type(y) == str:  # blocked or syntax?
+        y = safeeval._eval(converter(formula), as_str=False,
+            __globals={
+                **math.__dict__,
+                **numpy.__dict__,
+                "x":x
+            }
+        )[0]
+
+        if type(y) == str:  # Blocked or SyntaxError
             await ctx.reply(str(y))
             return
 
