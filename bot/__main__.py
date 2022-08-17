@@ -1,6 +1,7 @@
 import logging
 import signal
 from discord.ext import commands
+import discord
 import traceback
 import os
 import sys
@@ -35,7 +36,7 @@ class MyBot(commands.Bot):
     async def on_ready(self):
         logging.info("Login on "+self.user.name)
 
-    async def on_message(self, message):
+    async def on_message(self, message: discord.Message):
         if message.author.bot:
             return
         if message.content.startswith(prefix.get_prefix()):
@@ -45,6 +46,7 @@ class MyBot(commands.Bot):
         await super().on_message(message)
 
     async def on_command_error(self, context, exception):
+
         if isinstance(exception, commands.CommandNotFound):
             return
 
