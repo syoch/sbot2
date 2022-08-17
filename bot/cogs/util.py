@@ -1,14 +1,19 @@
+from typing import Dict
 from discord.ext import commands
+from discord.ext.commands import Bot
+from discord import Message
 from .. import state
 
 from libs.eval import safeeval
 import libs.sorter as sorter
 import re
+from .util_impl import eval as eval_impl
 
 
 class Util(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
+        self.bot: Bot = bot
+        self.eval_sessions: Dict[str, Message] = {}
 
     @commands.command(name="sort")
     # TODO(syoch): impl auto mode
@@ -58,64 +63,19 @@ class Util(commands.Cog):
         ]))
 
     @commands.command(name="eval")
-    async def _eval(self, ctx, *, expr: str):
+    async def _eval(self, ctx: commands.Context, *, expr: str):
         """
         Evalute python expression in safeeval
         """
-
+        print("reach")
         if not state.eval_enabled:
             await ctx.send("eval is disabled")
             return
-        try:
-            (ret, stdout) = safeeval._eval(expr)
-        except Exception as ex:
-            import traceback
-            await ctx.reply("Exception has occured!\n" +
-                            "```\n" +
-                            ''.join(traceback.TracebackException.from_exception(ex).format()) +
-                            "```")
-            return
-
-        # Create Content
-        code = expr.replace("```", "'''")
-
-        ret_len = len(ret)
-        if ret_len >= 1500:
-            ret = f"long object({ret_len})"
-        ret = ret.replace("```", "'''")
-
-        stdout_len = len(stdout)
-        if stdout_len >= 1500:
-            stdout = f"long object({stdout_len})"
-        stdout = stdout.replace("```", "'''")
-
-        lines = []
-
-        lines.extend([
-            "sources",
-            "```py",
-            code,
-            "```",
-            ""
-        ])
-
-        if ret:
-            lines.extend([
-                "return value",
-                "```",
-                ret,
-                "```"
-            ])
-
-        if stdout:
-            lines.extend([
-                "standard output",
-                "```",
-                stdout,
-                "```"
-            ])
-
-        await ctx.reply("\n".join(lines))
+        print("eval...")
+        lines = eval_impl(expr)
+        print(lines)
+        a = await ctx.reply("\n".join(lines))
+        self.eval_sessions[ctx.message.id] = a
 
     @commands.command()
     async def invite(self, ctx):
@@ -152,6 +112,20 @@ class Util(commands.Cog):
 
         await ctx.send(f"{100 * ok / (ok + ng)}% です 頑張ってください")
 
+    # Edit handling
+    @commands.Cog.listener()
+    async def on_message_edit(self, before, after):
+        if before.author.bot:
+            return
+        if before.content == after.content:
+            return
+        if before.id in self.eval_sessions:
+            ctx: commands.Context = await self.bot.get_context(after)
+            await self._eval.prepare(ctx)
+            await self.eval_sessions[before.id].edit(
+                content="\n".join(eval_impl(ctx.kwargs["expr"])))
+
 
 def setup(bot):
+
     bot.add_cog(Util(bot))
