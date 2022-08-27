@@ -67,13 +67,10 @@ class Util(commands.Cog):
         """
         Evalute python expression in safeeval
         """
-        print("reach")
         if not state.eval_enabled:
             await ctx.send("eval is disabled")
             return
-        print("eval...")
         lines = eval_impl(expr)
-        print(lines)
         a = await ctx.reply("\n".join(lines))
         self.eval_sessions[ctx.message.id] = a
 
